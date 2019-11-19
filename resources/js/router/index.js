@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 import App from '@/layout/App';
 import Dashboard from '@/page/dashboard';
-
+import Categories from '@/page/categories';
 
 export const constantRouter = [
     {
@@ -23,6 +23,14 @@ export const constantRouter = [
                 component: Dashboard,
                 meta: {
                     title: 'Dashboard',
+                },
+            },
+            {
+                path: 'categories',
+                name: 'Categories',
+                component: Categories,
+                meta: {
+                    title: 'Categories',
                 },
             }
         ]

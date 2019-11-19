@@ -7,10 +7,10 @@ use Auth;
 class AdminLogged
 {
     private $_skipRoute = [
-        'login',
-        'register',
-        'google.login',
-        'google.callback'
+        'admin.login',
+        // 'register',
+        // 'google.login',
+        // 'google.callback'
     ];
     /**
      * Handle an incoming request.
@@ -29,8 +29,7 @@ class AdminLogged
             {
                 return $next($request);
             }
-
-            return redirect()->route('login');
+            return redirect()->route('admin.login');
         }
 
         if(in_array(request()->route()->getName(), $this->_skipRoute))

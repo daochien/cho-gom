@@ -8,6 +8,7 @@ const service = axios.create({
 // Request intercepter
 service.interceptors.request.use(
     config => {
+        config.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         return config;
     },
     error => {

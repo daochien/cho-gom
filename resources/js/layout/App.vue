@@ -3,7 +3,16 @@
         <div class="app-wapper">
             <nav-bar></nav-bar>
             <side-bar></side-bar>
-            <router-view></router-view>
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <router-view></router-view>
+                    </div>
+                </div>
+                <footer-bar></footer-bar>
+            </div>            
         </div>
         <right-bar></right-bar>
     </div>
@@ -12,15 +21,16 @@
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Rightbar from './Rightbar';
-
+import Footer from './Footer';
 export default {
     components: {
         'nav-bar': Navbar,
         'side-bar': Sidebar,
         'right-bar': Rightbar,
+        'footer-bar': Footer
     },
     created() {
-
+        
     }
 
 }

@@ -33,15 +33,12 @@
                     <li>
                         <a href="javascript: void(0);">
                             <i class="fe-bell noti-icon"></i>
-                            <span>Notifications</span>
+                            <span>Quản lý sản phẩm</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li>
-                                <router-link :to="{name: 'Channel'}">Channel</router-link>
-                            </li>
-                            <li>
-                                <router-link :to="{name: 'Customers'}">Danh sách khách hàng</router-link>
+                                <router-link :to="{name: 'Categories'}">Danh mục</router-link>
                             </li>
                         </ul>
                     </li>
