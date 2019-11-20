@@ -68,7 +68,7 @@
                                         <td>
                                             New York
                                         </td>
-                                       
+
                                     </tr>
                                     <tr>
                                         <td>
@@ -90,7 +90,7 @@
                                         <td>
                                             New York
                                         </td>
-                                       
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -123,59 +123,84 @@
                 <div class="card-box">
                     <form>
                         <div class="form-group mb-2">
-                            <button type="button" class="btn btn-success waves-effect waves-light">Thêm</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light" @click="createCate()">Thêm</button>
                             <button type="button" class="btn btn-danger waves-effect waves-light">Reset</button>
                         </div>
                         <hr>
-                    
+
                         <div class="form-group mb-2">
                             <label>Danh mục cha</label>
-                            <select class="form-control form-control-sm">
-                                <option>Choose</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
+                            <select class="form-control form-control-sm" v-model="categorie.parent_id">
+                                <option value="">Root</option>
+                                <option v-for="(item, index) in categories" :key="index" :value="item.cate_id">{{ item.name }}</option>
                             </select>
                         </div>
                         <div class="form-group mb-2">
                             <label>Tên danh mục</label>
-                            <input type="text" class="form-control form-control-sm" >
+                            <input type="text" :class="['form-control form-control-sm', errors.name && !categorie.name ? 'parsley-error' : '']" v-model="categorie.name">
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.name && !categorie.name">
+                                <li class="parsley-required">{{ errors.name[0] }}</li>
+                            </ul>
                         </div>
                         <div class="form-group mb-2">
                             <label>Ảnh đại diện</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" >
+                                    <input type="file" class="custom-file-input form-control-sm">
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group mb-2">
                             <label>Thứ tự</label>
-                            <input type="number" class="form-control form-control-sm">
+                            <input type="number" class="form-control form-control-sm" v-model="categorie.ordinal">
                         </div>
                         <div class="form-group mb-3">
                             <p class="text-muted mt-3 mb-2">Hiển thị</p>
                             <div class="radio radio-info form-check-inline" style="margin-left: 10px;">
-                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
+                                <input type="radio" id="inlineRadio1" value="1" v-model="categorie.status" checked="">
                                 <label for="inlineRadio1">Có</label>
                             </div>
                             <div class="radio form-check-inline">
-                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                <input type="radio" id="inlineRadio2" value="0" v-model="categorie.status">
                                 <label for="inlineRadio2">Không</label>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </template>
 <script>
-
+import { create } from '@/api/categories.js';
 export default {
+    data() {
+        return {
+            categories: {
 
+            },
+            categorie: {
+                parent_id: '',
+                name: '',
+                ordinal: 1,
+                status: 1,
+                avatar: ''
+            },
+            errors: [],
+            error: ''
+        }
+    },
+    methods: {
+        async createCate() {
+            try {
+                let data = await create(this.categorie);
+            } catch(err) {
+                this.errors = err.errors;
+            }
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
