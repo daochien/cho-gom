@@ -16,7 +16,14 @@
 </template>
 <script>
 export default {
-
+    data() {
+        return {
+            user: window.__user__
+        }
+    },
+    created() {
+        
+    }
 }
 </script>
 <style lang="scss" scoped>

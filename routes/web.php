@@ -26,11 +26,9 @@ Route::get('/cart', 'FrontEnd\HomeController@cart')->name('cart');
 Route::group([ 'prefix' => 'admin', 'as' => 'admin.' ], function () {
 
     Route::get('login', 'Admin\AuthenController@login')->name('login');
-    Route::get('register', 'Admin\AuthenController@register')->name('register');
-
-    // Route::get('google/auth/login', 'Admin\AuthenController@redirectToProvider')->name('google.login');
-    // Route::get('google/auth/callback', 'Admin\AuthenController@handleProviderCallback')->name('google.callback');
-    Route::group([], function() {   
+    Route::post('signIn', 'Admin\AuthenController@signIn')->name('signIn');
+    
+    Route::group(['middleware' => 'auth.admin'], function() {   
         Route::get('logout', 'Admin\AuthenController@logout')->name('logout');
         Route::get('/', 'Admin\AppController@index')->name('index');
         Route::get('/{any}', 'Admin\AppController@index')->where('any', '.*');

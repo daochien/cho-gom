@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BackEnd\Categories;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use App\User;
-use Validator, Auth;
+use Validator;
 
 class CategoriesController extends Controller
 {
@@ -76,40 +74,4 @@ class CategoriesController extends Controller
         }
     }
 
-    public function register(Request $request)
-    {
-
-        $user = new User();
-        $user->email = 'daochienhubt@gmail.com';
-        $user->name = 'Đào Chiến';
-        $user->password = bcrypt('123456');
-        $user->save();
-
-        return response()->json($user, 200);
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        dd($this->guard()->attempt($credentials));
-        if (!($token = $this->guard()->attempt($credentials))) {
-            return response()->json([
-                'status' => 'error',
-                'error' => 'invalid.credentials',
-                'msg' => 'Invalid Credentials.'
-            ], 401);
-        }
-
-        return response()->json(['token' => $token], 200);
-    }
-
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\Guard
-     */
-    public function guard()
-    {
-        return Auth::guard('api');
-    }
 }

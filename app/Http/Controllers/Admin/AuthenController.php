@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Auth, Validator;
 class AuthenController extends Controller
 {
     public function __construct()
@@ -15,7 +15,11 @@ class AuthenController extends Controller
      * view login
     */
     public function login()
-    {
+    {        
+        if(Auth::check())
+        {
+            return redirect()->route('admin.index');
+        }
         return view('backend.auth.login');
     }
 
@@ -27,25 +31,28 @@ class AuthenController extends Controller
     */
     public function signIn(Request $request)
     {
-
+        if(Auth::check())
+        {
+            return redirect()->route('admin.index');
+        }
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
             'remember_me' => 'string'
-        ]);
-
+        ]);                           
         if ($validator->fails())
         {
             return redirect()->back()->with('error', $validator->errors()->first());
         }
 
         $credentials = request(['email', 'password']);
+        
         if(!Auth::attempt($credentials, true))
         {
-            return redirect()->back()->with('error', 'Wrong username or password!');
+            return redirect()->back()->with('error', 'Sai thông tin đăng nhập!');
         }
 
-        return redirect()->route('admin.app');
+        return redirect()->route('admin.index');
     }
 
     /**
@@ -94,6 +101,16 @@ class AuthenController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('home');
+        return redirect()->route('admin.login');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+    public function guard()
+    {
+        return Auth::guard('api');
     }
 }

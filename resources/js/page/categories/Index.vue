@@ -124,7 +124,7 @@
                     <form>
                         <div class="form-group mb-2">
                             <button type="button" class="btn btn-success waves-effect waves-light" @click="createCate()">Thêm</button>
-                            <button type="button" class="btn btn-danger waves-effect waves-light">Reset</button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light" @click="openFileManager()">Reset</button>
                         </div>
                         <hr>
 
@@ -199,6 +199,14 @@ export default {
             } catch(err) {
                 this.errors = err.errors;
             }
+        },
+        openFileManager () {
+            window.open(`/laravel-filemanager`, 'width=900,height=600')
+            var self = this
+            window.SetUrl = function (items) {
+                self.form.main_image = items[0].url
+            }
+            return false
         }
     }
 }

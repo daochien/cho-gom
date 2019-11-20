@@ -12,11 +12,11 @@
                 <!-- User box -->
                 <div class="user-box">
                     <div class="user-img">
-                        <img  alt="user-img" title="Mat Helme" class="rounded-circle img-fluid">
+                        <img src="/app/assets/images/users/user-4.jpg" alt="user-img" title="Mat Helme" class="rounded-circle img-fluid">
                         <a href="javascript:void(0);" class="user-edit"><i class="mdi mdi-pencil"></i></a>
                     </div>
 
-                    <h5><a href="javascript: void(0);">Đào Chiến</a> </h5>
+                    <h5><a href="javascript: void(0);">{{ user.name }}</a> </h5>
                     <p class="text-muted mb-0"><small>Admin Head</small></p>
                 </div>
 
@@ -105,7 +105,7 @@
 export default {
     data() {
         return {
-
+            user: window.__user__
         }
     }
 }

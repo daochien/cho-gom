@@ -28,7 +28,7 @@
                                 </div>
                             @endif
 
-                            <form action="" method="post" class="form-login">
+                            <form action="{{ route('admin.signIn') }}" method="post" class="form-login">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="emailaddress">Email address</label>

@@ -22,7 +22,6 @@ class AdminLogged
     public function handle($request, Closure $next)
     {
         $auth = Auth::check();
-
         if(!$auth)
         {
             if(in_array(request()->route()->getName(), $this->_skipRoute))
@@ -31,10 +30,10 @@ class AdminLogged
             }
             return redirect()->route('admin.login');
         }
-
+        
         if(in_array(request()->route()->getName(), $this->_skipRoute))
         {
-            return redirect()->route('admin.app');
+            return redirect()->route('admin.index');
         }
 
         return $next($request);
