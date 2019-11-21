@@ -27,8 +27,8 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.' ], function () {
 
     Route::get('login', 'Admin\AuthenController@login')->name('login');
     Route::post('signIn', 'Admin\AuthenController@signIn')->name('signIn');
-    
-    Route::group(['middleware' => 'auth.admin'], function() {   
+
+    Route::group(['middleware' => 'auth.admin'], function() {
         Route::get('logout', 'Admin\AuthenController@logout')->name('logout');
         Route::get('/', 'Admin\AppController@index')->name('index');
         Route::get('/{any}', 'Admin\AppController@index')->where('any', '.*');

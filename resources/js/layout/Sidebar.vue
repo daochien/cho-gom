@@ -40,6 +40,9 @@
                             <li>
                                 <router-link :to="{name: 'Categories'}">Danh mục</router-link>
                             </li>
+                            <li>
+                                <router-link :to="{name: 'Product'}">Sản phẩm</router-link>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -61,5 +64,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+li {
+
+    .router-link-exact-active {
+        color: #fff !important;
+    }
+}
 
 </style>

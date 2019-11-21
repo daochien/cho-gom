@@ -20,102 +20,51 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-4">
-                                <a href="#custom-modal" class="btn btn-danger waves-effect waves-light" data-animation="fadein" data-plugin="custommodal" data-overlaycolor="#38414a"><i class="mdi mdi-plus-circle mr-1"></i> Add Customers</a>
+                                <a href="#custom-modal" class="btn btn-danger waves-effect waves-light" data-animation="fadein" data-plugin="custommodal" data-overlaycolor="#38414a"><i class="mdi mdi-plus-circle mr-1"></i>Actions</a>
                             </div>
-                            <div class="col-sm-8">
-                                <div class="text-sm-right">
-                                    <button type="button" class="btn btn-success mb-2 mr-1"><i class="mdi mdi-settings"></i></button>
-                                    <button type="button" class="btn btn-light mb-2 mr-1">Import</button>
-                                    <button type="button" class="btn btn-light mb-2">Export</button>
-                                </div>
-                            </div><!-- end col-->
+
                         </div>
 
                         <div class="table-responsive">
                             <table class="table table-centered table-striped" id="products-datatable">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20px;">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th>
+                                        <th>Thứ tự</th>
                                         <th>Tên</th>
                                         <th>Parent</th>
-                                        <th>Trạng thái</th>
+                                        <th>Hiển thị</th>
                                         <th>Create Date</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr v-for="(item, index) in categories" :key="index">
                                         <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
+                                            {{ item.ordinal }}
                                         </td>
                                         <td class="table-user">
-                                            <img src="/app/assets/images/users/user-4.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                            <a href="javascript:void(0);" class="text-body font-weight-semibold">Paul J. Friend</a>
+                                            <img v-show="item.avatar" :src="item.avatar" alt="table-user" class="mr-2 rounded-circle">
+                                            <a href="javascript:void(0);" @click="handlerUpdate(item)" class="text-body font-weight-semibold">{{ item.name }} </a>
                                         </td>
                                         <td>
-                                            937-330-1634
+                                            {{ item.parent.id == 0 ? 'Root' : item.parent.name }}
                                         </td>
                                         <td>
-                                            pauljfrnd@jourrapide.com
+                                            <span class="badge badge-success" v-if="item.status">Có</span>
+                                            <span class="badge badge-danger" v-if="!item.status">không</span>
                                         </td>
                                         <td>
-                                            New York
+                                            {{ item.created_at }}
                                         </td>
-
+                                        <td>
+                                            <a href="javascript:void(0);" class="action-icon" @click="handlerUpdate(item)"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                            <a href="javascript:void(0);" class="action-icon" @click="removeCate(item.cate_id)"> <i class="mdi mdi-delete"></i></a>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td class="table-user">
-                                            <img src="/app/assets/images/users/user-4.jpg" alt="table-user" class="mr-2 rounded-circle">
-                                            <a href="javascript:void(0);" class="text-body font-weight-semibold">Paul J. Friend</a>
-                                        </td>
-                                        <td>
-                                            937-330-1634
-                                        </td>
-                                        <td>
-                                            pauljfrnd@jourrapide.com
-                                        </td>
-                                        <td>
-                                            New York
-                                        </td>
 
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-
-                        <ul class="pagination pagination-rounded justify-content-end mb-0">
-                            <li class="page-item">
-                                <a class="page-link" href="javascript: void(0);" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
-                            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-                            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-                            <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-                            <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="javascript: void(0);" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-
                     </div> <!-- end card-body-->
                 </div>
             </div>
@@ -123,16 +72,17 @@
                 <div class="card-box">
                     <form>
                         <div class="form-group mb-2">
-                            <button type="button" class="btn btn-success waves-effect waves-light" @click="createCate()">Thêm</button>
-                            <button type="button" class="btn btn-danger waves-effect waves-light" @click="openFileManager()">Reset</button>
+                            <button v-if="categorie.type === 'create'" type="button" class="btn btn-success waves-effect waves-light" @click="createCate()">Thêm</button>
+                            <button v-if="categorie.type === 'update'" type="button" class="btn btn-primary waves-effect waves-light" @click="updateCate()">Cập nhật</button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light"  @click="resetForm()">Reset</button>
                         </div>
                         <hr>
 
                         <div class="form-group mb-2">
                             <label>Danh mục cha</label>
                             <select class="form-control form-control-sm" v-model="categorie.parent_id">
-                                <option value="">Root</option>
-                                <option v-for="(item, index) in categories" :key="index" :value="item.cate_id">{{ item.name }}</option>
+                                <option value="0">Root</option>
+                                <option v-for="(item, index) in categories" :key="index" :value="item.cate_id" v-if="item.cate_id != categorie.cate_id">{{ item.name }}</option>
                             </select>
                         </div>
                         <div class="form-group mb-2">
@@ -145,11 +95,14 @@
                         <div class="form-group mb-2">
                             <label>Ảnh đại diện</label>
                             <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input form-control-sm">
+                                <div class="custom-file" data-toggle="modal" data-target="#file-manager">
+                                    <input type="text" class="custom-file-input form-control-sm" style="cursor: pointer;">
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group mb-2" v-show="categorie.avatar">
+                            <img :src="categorie.avatar" alt="post-img" class="rounded mr-1" height="60">
                         </div>
                         <div class="form-group mb-2">
                             <label>Thứ tự</label>
@@ -171,10 +124,19 @@
                 </div>
             </div>
         </div>
+
+        <!--Modals-->
+        <div id="file-manager" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-full">
+                <div class="modal-content" style="height: 600px;">
+                    <iframe src="https://chogom-dev.com/laravel-filemanager" height="600px;" style="border:none;"></iframe>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </template>
 <script>
-import { create } from '@/api/categories.js';
+import { create, listCate, update, remove } from '@/api/categories.js';
 export default {
     data() {
         return {
@@ -182,32 +144,87 @@ export default {
 
             },
             categorie: {
-                parent_id: '',
+                cate_id: '',
+                parent_id: 0,
                 name: '',
                 ordinal: 1,
                 status: 1,
-                avatar: ''
+                avatar: '',
+                type: 'create'
             },
             errors: [],
             error: ''
         }
     },
     methods: {
+        // tao moi danh muc
         async createCate() {
             try {
                 let data = await create(this.categorie);
+                this.listCategories();
             } catch(err) {
                 this.errors = err.errors;
             }
         },
-        openFileManager () {
-            window.open(`/laravel-filemanager`, 'width=900,height=600')
-            var self = this
-            window.SetUrl = function (items) {
-                self.form.main_image = items[0].url
+        //lay danh sach danh muc
+        async listCategories() {
+            try {
+                let data = await listCate();
+                this.categories = data;
+            } catch(err) {
+                this.error = err;
             }
-            return false
+        },
+        handlerUpdate(cate) {
+            this.categorie = cate;
+            this.categorie.type = 'update';
+            this.categorie.parent_id = cate.parent.id;
+        },
+
+        async updateCate() {
+            try {
+                let data = await update(this.categorie);
+                this.listCategories();
+            } catch(err) {
+                this.errors = err.errors;
+            }
+        },
+
+        async removeCate(cate_id) {
+            if(confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
+                try {
+                    let data = await remove({cate_id});
+                    this.listCategories();
+                    alert('Xóa danh mục thành công!');
+                } catch(err) {
+                    this.errors = err.errors;
+                }
+            }
+
+        },
+
+        resetForm() {
+            this.categorie = {
+                parent_id: 0,
+                name: '',
+                ordinal: 1,
+                status: 1,
+                avatar: '',
+                type: 'create'
+            };
         }
+    },
+    created() {
+        this.listCategories();
+    },
+    mounted() {
+        let self = this;
+        window.addEventListener('message', function(result) {
+            let data = result.data;
+            if(data.type === 'file-selected') {
+                self.categorie.avatar = data.path;
+            }
+        });
     }
 }
 </script>

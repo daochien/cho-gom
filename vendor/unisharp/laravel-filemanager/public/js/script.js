@@ -342,7 +342,12 @@ function useFile(file_url) {
     }
   } else {
     // No editor found, open/download file using browser's default method
-    window.open(url);
+    alert('Đã chọn');
+    window.parent.postMessage({
+        type: 'file-selected',
+        path: url,
+    }, '*');
+    //window.open(url);
   }
 }
 //end useFile

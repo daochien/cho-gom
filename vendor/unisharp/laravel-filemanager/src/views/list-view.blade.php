@@ -12,9 +12,9 @@
     <tr>
       <td>
         <i class="fa {{ $item->icon }}"></i>
-        <a class="{{ $item->is_file ? 'file' : 'folder'}}-item clickable" data-id="{{ $item->is_file ? $item->url : $item->path }}" title="{{$item->name}}">
+        <span class="{{ $item->is_file ? 'file' : 'folder'}}-item clickable" data-id="{{ $item->is_file ? $item->url : $item->path }}" title="{{$item->name}}">
           {{ str_limit($item->name, $limit = 40, $end = '...') }}
-        </a>
+        </span>
       </td>
       <td>{{ $item->size }}</td>
       <td>{{ $item->type }}</td>
