@@ -30,10 +30,14 @@
                     <div class="card-body">
                         <div class="form-group mb-2">
                             <label>Danh mục</label>
-                            <select :class="['form-control form-control-sm', errors.cate_ids && product.cate_ids.length == 0 ? 'parsley-error' : '']" v-model="product.cate_ids">
+                            <!-- <select :class="['form-control form-control-sm', errors.cate_ids && product.cate_ids.length == 0 ? 'parsley-error' : '']" v-model="product.cate_ids">
                                 <option value="0">--Chọn--</option>
                                 <option v-for="(item, index) in categories" :key="index" :value="item.cate_id" >{{ item.name }}</option>
                             </select>
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
+                                <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
+                            </ul> -->
+                            <multiselect v-model="product.cate_ids"  placeholder=" " label="name" track-by="cate_id" :options="categories" :multiple="true" ></multiselect>
                             <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
                                 <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
                             </ul>
@@ -107,13 +111,13 @@
                                     <div class="checkbox checkbox-success mb-2">
                                         <input id="checkbox4" type="checkbox" :value="4" v-model="product.status">
                                         <label for="checkbox4">
-                                            Hiển thị
+                                            Còn hàng
                                         </label>
                                     </div>
                                     <div class="checkbox checkbox-success mb-2">
                                         <input id="checkbox8" type="checkbox" :value="8" v-model="product.status">
                                         <label for="checkbox8">
-                                            Nổi bật
+                                            Hết hàng
                                         </label>
                                     </div>
 
@@ -201,11 +205,15 @@
 
 </template>
 <script>
-import { listCate } from '@/api/categories.js';
-import { create } from '@/api/product.js';
+import { listCate, create } from '@/api/categories.js';
+import { addProduct } from '@/api/product.js';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Multiselect from 'vue-multiselect';
 
 export default {
+    components: {
+        Multiselect
+    },
     data() {
         return {
             categories: [],
@@ -232,6 +240,7 @@ export default {
         }
     },
     methods: {
+       
         //lay danh sach danh muc
         async listCategories() {
             try {
@@ -295,7 +304,7 @@ export default {
         //them moi san pham
         async createProduct() {
             try {
-                let data = await create(this.product);
+                let data = await addProduct(this.product);
             } catch(err) {
                 this.errors = err.errors;
             }
@@ -353,3 +362,4 @@ export default {
     min-height: 300px;
 }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

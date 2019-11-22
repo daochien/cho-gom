@@ -6,7 +6,8 @@ Vue.use(VueRouter);
 import App from '@/layout/App';
 import Dashboard from '@/page/dashboard';
 import Categories from '@/page/categories';
-import Product from '@/page/product';
+import CreateProduct from '@/page/product';
+import Product from '@/page/product/Manage.vue';
 
 export const constantRouter = [
     {
@@ -34,8 +35,17 @@ export const constantRouter = [
                     title: 'Categories',
                 },
             },
+            //san pham
             {
-                path: 'product',
+                path: 'create-product',
+                name: 'CreateProduct',
+                component: CreateProduct,
+                meta: {
+                    title: 'CreateProduct',
+                },
+            },
+            {
+                path: 'manage-product',
                 name: 'Product',
                 component: Product,
                 meta: {

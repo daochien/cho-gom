@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\BackEnd\Categories;
+use App\Models\Categories;
 use Validator, Auth;
 
 class CategoriesController extends Controller
@@ -56,7 +56,8 @@ class CategoriesController extends Controller
             {
                 return response()->json([
                     'status' => true,
-                    'message' => 'success!'
+                    'message' => 'success!',
+                    'data' => $cate
                 ]);
             }
             else
