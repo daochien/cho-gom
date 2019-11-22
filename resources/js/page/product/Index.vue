@@ -16,8 +16,11 @@
         </div>
         <div class="row">
             <div class="col-12 mb-2">
-                <a href="#custom-modal" class="btn btn-success waves-effect waves-light" data-animation="fadein" data-plugin="custommodal" data-overlaycolor="#38414a">
+                <a href="javascript:void(0)" class="btn btn-success waves-effect waves-light" @click="createProduct()">
                     <i class="mdi mdi-plus-circle mr-1"></i>Thêm mới
+                </a>
+                <a href="javascript:void(0)" class="btn btn-danger waves-effect waves-light" @click="resetForm()">
+                    <i class="mdi mdi-lock-reset"></i>Reset
                 </a>
             </div>
         </div>
@@ -27,10 +30,13 @@
                     <div class="card-body">
                         <div class="form-group mb-2">
                             <label>Danh mục</label>
-                            <select class="form-control form-control-sm" v-model="product.cate_ids">
+                            <select :class="['form-control form-control-sm', errors.cate_ids && product.cate_ids.length == 0 ? 'parsley-error' : '']" v-model="product.cate_ids">
                                 <option value="0">--Chọn--</option>
                                 <option v-for="(item, index) in categories" :key="index" :value="item.cate_id" >{{ item.name }}</option>
                             </select>
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
+                                <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
+                            </ul>
                         </div>
                         <div class="form-group mb-2">
                             <label>Tên sản phẩm</label>
@@ -55,8 +61,8 @@
                         </div>
                         <div class="form-group mb-2">
                             <label>Nội dung</label>
-                            <textarea rows="5" :class="['form-control form-control-sm', errors.content && !product.content ? 'parsley-error' : '']" v-model="product.content"></textarea>
-                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.content && !product.content">
+                            <textarea rows="5" id="editor" :class="['form-control form-control-sm', errors.content && !product.content ? 'parsley-error' : '']" v-model="product.content"></textarea>
+                            <ul class="parsley-errors-list filled"  v-if="errors.content && !product.content">
                                 <li class="parsley-required">{{ errors.content[0] }}</li>
                             </ul>
                         </div>
@@ -71,6 +77,13 @@
                             <input type="number" :class="['form-control form-control-sm', errors.price && !product.price ? 'parsley-error' : '']" v-model="product.price">
                             <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.price && !product.price">
                                 <li class="parsley-required">{{ errors.price[0] }}</li>
+                            </ul>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Trọng lượng(g)</label>
+                            <input type="number" :class="['form-control form-control-sm', errors.weight && !product.weight ? 'parsley-error' : '']" v-model="product.weight">
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.weight && !product.weight">
+                                <li class="parsley-required">{{ errors.weight[0] }}</li>
                             </ul>
                         </div>
                         <div class="form-group mb-2">
@@ -103,33 +116,73 @@
                                             Nổi bật
                                         </label>
                                     </div>
+
                                 </div>
+                                <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.status && product.status.length == 0">
+                                    <li class="parsley-required">{{ errors.status[0] }}</li>
+                                </ul>
                             </div>
 
                         </div>
                         <div class="form-group mb-2">
                             <label>Ảnh đại diện</label>
                             <div class="input-group">
-                                <div class="custom-file" data-toggle="modal" data-target="#file-manager">
-                                    <input type="text" class="custom-file-input form-control-sm" style="cursor: pointer;">
+                                <div class="custom-file" data-toggle="modal" data-target="#file-manager" @click="type_image = 'avatars'">
+                                    <input type="text" :class="['custom-file-input form-control-sm', errors.avatars && product.avatars.length == 0 ? 'parsley-error' : '']" style="cursor: pointer;">
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
+
                             </div>
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.avatars && product.avatars.length == 0">
+                                <li class="parsley-required">{{ errors.avatars[0] }}</li>
+                            </ul>
                         </div>
                         <div class="form-group mb-2" v-show="product.avatars">
-                            <img v-for="(item, index) in product.avatars" :key="index" :src="item" alt="post-img" class="rounded mr-1" height="60">
+                            <div class="row">
+                                <div v-for="(item, index) in product.avatars" :key="index" class="col-6 mb-2">
+                                    <a class="list-image">
+                                        <i class="mdi mdi-close-circle-outline btn-remove-image"  @click="removeAvatars(index)"></i>
+                                        <img :src="item" alt="post-img" class="rounded mr-1" width="80" height="60">
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group mb-2">
                             <label>Ảnh sản phẩm</label>
                             <div class="input-group">
-                                <div class="custom-file" data-toggle="modal" data-target="#file-manager">
+                                <div class="custom-file" data-toggle="modal" data-target="#file-manager" @click="type_image = 'images'">
                                     <input type="text" class="custom-file-input form-control-sm" style="cursor: pointer;">
                                     <label class="custom-file-label">Choose file</label>
                                 </div>
                             </div>
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.images && product.images.length == 0">
+                                <li class="parsley-required">{{ errors.images[0] }}</li>
+                            </ul>
                         </div>
                         <div class="form-group mb-2" v-show="product.images">
-                            <img v-for="(item, index) in product.images" :key="index" :src="item" alt="post-img" class="rounded mr-1" height="60">
+                            <div class="row">
+                                <div v-for="(item, index) in product.images" :key="index" class="col-6 mb-2">
+                                    <a class="list-image">
+                                        <i class="mdi mdi-close-circle-outline btn-remove-image"  @click="removeImages(index)"></i>
+                                        <img :src="item" alt="post-img" class="rounded mr-1" width="80" height="60">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label>Thêm thuộc tính </label> <button class="btn btn-outline-pink btn-rounded waves-effect waves-light btn-xs" @click="addOption()">+ Thêm</button>
+                            <div class="row mt-2" v-for="(item, index) in product.options" :key="index">
+                                <div class="col-4">
+                                    <input type="text" class="form-control form-control-sm" placeholder="Tên" v-model="item.name">
+                                </div>
+                                <div class="col-7">
+                                    <input type="text" class="form-control form-control-sm" placeholder="Giá trị" v-model="item.value">
+                                </div>
+                                <div class="col-1" v-show="index > 0">
+                                    <i class="mdi mdi-close-circle-outline" style="color:red; cursor: pointer;" @click="removeOption(index)"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,17 +196,19 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
     </div>
 
 </template>
 <script>
 import { listCate } from '@/api/categories.js';
+import { create } from '@/api/product.js';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 export default {
     data() {
         return {
-            categories: {
-
-            },
+            categories: [],
             product: {
                 cate_ids: [],
                 name: '',
@@ -161,11 +216,19 @@ export default {
                 summary: '',
                 content: '',
                 price: '',
+                weight: '',
                 avatars: [],
-                status: [1]
-
+                status: [1],
+                images: [],
+                options: [
+                    {
+                        name: '',
+                        value: ''
+                    }
+                ]
             },
-            errors: []
+            type_image: '',
+            errors: [],
         }
     },
     methods: {
@@ -178,12 +241,115 @@ export default {
                 this.error = err;
             }
         },
+        removeAvatars(index) {
+            this.product.avatars.splice(index, 1);
+        },
+        removeImages(index) {
+            this.product.images.splice(index, 1);
+        },
+
+        getCkeditor(){
+            CKEDITOR.replace('editor');
+        },
+        addOption() {
+            let check = true;
+            this.product.options.forEach((item) => {
+                if(!item.value || !item.name) {
+                    check = false;
+                }
+            });
+            if(!check) {
+                alert('Bạn chưa nhập đầy đủ thông tin');
+            } else {
+                this.product.options.push({
+                    name: '',
+                    value: ''
+                });
+            }
+
+        },
+        removeOption(index) {
+            this.product.options.splice(index, 1);
+        },
+        resetForm() {
+            this.product = {
+                cate_ids: [],
+                name: '',
+                code: '',
+                summary: '',
+                content: '',
+                price: '',
+                weight: '',
+                avatars: [],
+                status: [1],
+                images: [],
+                options: [
+                    {
+                        name: '',
+                        value: ''
+                    }
+                ]
+            };
+            this.errors = [];
+        },
+        //them moi san pham
+        async createProduct() {
+            try {
+                let data = await create(this.product);
+            } catch(err) {
+                this.errors = err.errors;
+            }
+        }
+
     },
     created() {
         this.listCategories();
+    },
+    mounted() {
+        this.getCkeditor();
+        let self = this;
+        window.addEventListener('message', function(result) {
+            let data = result.data;
+            if(data.type === 'file-selected') {
+                if(self.type_image === 'avatars') {
+                    if(self.product.avatars.indexOf(data.path) == -1) {
+                        self.product.avatars.push(data.path);
+                        alert('Đã chọn');
+                    } else {
+                        alert('File này đã được chọn');
+                    }
+                }
+                else if(self.type_image === 'images') {
+                    if(self.product.images.indexOf(data.path) == -1) {
+                        self.product.images.push(data.path);
+                        alert('Đã chọn');
+                    } else {
+                        alert('File này đã được chọn');
+                    }
+                }
+            }
+        });
     }
 }
 </script>
 <style lang="scss" scoped>
+.list-image {
+    position: relative;
+    img {
+        border: 1px solid #0099ff;
+    }
+    .btn-remove-image {
+        position: absolute;
+        right: 0;
+        top: -28px;
+        color: red;
+        cursor: pointer;
+    }
+}
 
+</style>
+<style>
+.ck-editor .ck-editor__main .ck-content {
+    min-height: 300px;
+}
 </style>
