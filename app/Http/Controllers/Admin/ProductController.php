@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Product\CreateProduct;
+use App\Http\Requests\Product\ProductUpdate;
 use App\Models\Product;
+use Validator;
 
 class ProductController extends Controller
 {
@@ -67,6 +69,112 @@ class ProductController extends Controller
                 'message' => 'success',
                 'data' => $products
             ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Xóa sản phẩm
+     * @param Number product_id
+     * @return response
+    */
+    public function remove(Request $request)
+    {
+        try
+        {
+            $validator = Validator::make($request->all(), [
+                'product_id' => 'required|numeric',
+
+            ]);
+
+            if ($validator->fails())
+            {
+                throw new \Exception($validator->errors()->first());
+            }
+
+            $product = Product::findOrFail($request->product_id);
+            $product->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Xóa sản phẩm thành công!'
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Get product by id
+     * @param Number product_id
+     * @return response
+    */
+    public function findProduct(Request $request)
+    {
+        try
+        {
+            $validator = Validator::make($request->all(), [
+                'product_id' => 'required|numeric',
+
+            ]);
+
+            if ($validator->fails())
+            {
+                throw new \Exception($validator->errors()->first());
+            }
+
+            $product = Product::with('getCategories', 'getOptions')->findOrFail($request->product_id);
+
+            return response()->json([
+                'status' => true,
+                'message' => '',
+                'data' => $product
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Cap nhat thong tin san pham
+     * @param ProducUpdate request
+     * @return response
+    */
+    public function update(ProductUpdate $request)
+    {
+        try
+        {
+
+            $product = new Product();
+            $update = $product->productUpdate($request->all());
+            if(!$update)
+            {
+                throw new \Exception('Cập nhật sản phẩm không thành công');
+            }
+            return response()->json([
+                'status' => true,
+                'message' => 'Cập nhật sản phẩm thành công!',
+                'data' => $update
+            ]);
+
         }
         catch(\Exception $e)
         {

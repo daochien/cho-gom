@@ -8,6 +8,7 @@ import Dashboard from '@/page/dashboard';
 import Categories from '@/page/categories';
 import CreateProduct from '@/page/product';
 import Product from '@/page/product/Manage.vue';
+import EditProduct from '@/page/product/Edit.vue';
 
 export const constantRouter = [
     {
@@ -50,6 +51,14 @@ export const constantRouter = [
                 component: Product,
                 meta: {
                     title: 'Product',
+                },
+            },
+            {
+                path: 'edit-product/:id',
+                name: 'EditProduct',
+                component: EditProduct,
+                meta: {
+                    title: 'EditProduct',
                 },
             }
         ]

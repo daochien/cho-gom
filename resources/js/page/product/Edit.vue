@@ -16,8 +16,8 @@
         </div>
         <div class="row">
             <div class="col-12 mb-2">
-                <a href="javascript:void(0)" class="btn btn-success waves-effect waves-light" @click="createProduct()">
-                    <i class="mdi mdi-plus-circle mr-1"></i>Thêm mới
+                <a href="javascript:void(0)" class="btn btn-success waves-effect waves-light" @click="update()">
+                    <i class="mdi mdi-plus-circle mr-1"></i>Cập nhật
                 </a>
                 <a href="javascript:void(0)" class="btn btn-danger waves-effect waves-light" @click="resetForm()">
                     <i class="mdi mdi-lock-reset"></i>Reset
@@ -30,13 +30,6 @@
                     <div class="card-body">
                         <div class="form-group mb-2">
                             <label>Danh mục</label>
-                            <!-- <select :class="['form-control form-control-sm', errors.cate_ids && product.cate_ids.length == 0 ? 'parsley-error' : '']" v-model="product.cate_ids">
-                                <option value="0">--Chọn--</option>
-                                <option v-for="(item, index) in categories" :key="index" :value="item.cate_id" >{{ item.name }}</option>
-                            </select>
-                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
-                                <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
-                            </ul> -->
                             <multiselect v-model="product.cate_ids"  placeholder=" " label="name" track-by="cate_id" :options="categories" :multiple="true" ></multiselect>
                             <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
                                 <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
@@ -205,8 +198,8 @@
 
 </template>
 <script>
-import { listCate, create } from '@/api/categories.js';
-import { addProduct } from '@/api/product.js';
+import { listCate } from '@/api/categories.js';
+import { addProduct, findProduct, updateProduct } from '@/api/product.js';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Multiselect from 'vue-multiselect';
 
@@ -218,6 +211,7 @@ export default {
         return {
             categories: [],
             product: {
+                product_id: '',
                 cate_ids: [],
                 name: '',
                 code: '',
@@ -226,7 +220,7 @@ export default {
                 price: '',
                 weight: '',
                 avatars: [],
-                status: [1],
+                status: [],
                 images: [],
                 options: [
                     {
@@ -281,39 +275,63 @@ export default {
             this.product.options.splice(index, 1);
         },
         resetForm() {
-            this.product = {
-                cate_ids: [],
-                name: '',
-                code: '',
-                summary: '',
-                content: '',
-                price: '',
-                weight: '',
-                avatars: [],
-                status: [1],
-                images: [],
-                options: [
-                    {
-                        name: '',
-                        value: ''
-                    }
-                ]
-            };
-            this.errors = [];
+            this.find(this.$route.params.id);
         },
-        //them moi san pham
-        async createProduct() {
+
+        async find(product_id) {
             try {
-                let data = await addProduct(this.product);
+                let data = await findProduct({product_id});
+                this.asyncData(data);
+            } catch(err) {
+                console.log(err);
+            }
+        },
+        asyncData(data) {
+            this.product.product_id = data.product_id;
+            this.product.name = data.name;
+            this.product.code = data.code;
+            this.product.summary = data.summary;
+            this.product.content = data.content;
+            this.product.price = data.price;
+            this.product.weight = data.weight;
+            this.product.avatars = JSON.parse(data.avatars);
+            this.product.images = JSON.parse(data.images);
+            this.product.options = data.get_options;
+            this.product.cate_ids = data.get_categories;
+
+            if(data.status & 1) {
+                this.product.status.push(1);
+            }
+            if(data.status & 2) {
+                this.product.status.push(2);
+            }
+            if(data.status & 4) {
+                this.product.status.push(4);
+            }
+            if(data.status & 8) {
+                this.product.status.push(8);
+            }
+        },
+
+        async update() {
+            try {
+
+                let data = await updateProduct(this.product);
                 this.$router.push({name: 'Product'});
             } catch(err) {
-                this.errors = err.errors;
+                if(err.errors) {
+                    this.errors = err.errors;
+                }
+                if(err.message) {
+                    this.error = err.message;
+                }
             }
         }
 
     },
     created() {
         this.listCategories();
+        this.find(this.$route.params.id);
     },
     mounted() {
         this.getCkeditor();

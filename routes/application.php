@@ -11,6 +11,8 @@ Route::group(['middleware' => 'auth.admin'], function() {
         Route::post('create', 'Admin\ProductController@create')->name('create');
         Route::post('update', 'Admin\ProductController@update')->name('update');
         Route::post('remove', 'Admin\ProductController@remove')->name('remove');
+        Route::post('find', 'Admin\ProductController@findProduct')->name('findProduct');
+        Route::post('update', 'Admin\ProductController@update')->name('update');
         Route::get('products', 'Admin\ProductController@products')->name('products');
     });
 });

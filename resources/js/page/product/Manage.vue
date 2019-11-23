@@ -48,12 +48,12 @@
             </div> <!-- end col-->
         </div>
         <div class="row">
-            <div class="col-md-6 col-xl-3" v-for="(item, index) in products" :key="index">
+            <div class="col-md-6 col-xl-3" v-for="(item, index) in products.data" :key="index">
                 <div class="card-box product-box">
 
                     <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i class="mdi mdi-close"></i></a>
+                        <router-link :to="{name: 'EditProduct', params: {id: item.product_id}}" class="btn btn-success btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i></router-link >
+                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light" @click="remove(item.product_id)"><i class="mdi mdi-close"></i></a>
                     </div>
 
                     <div>
@@ -63,59 +63,39 @@
                     <div class="product-info">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="ecommerce-prduct-detail.html" class="text-dark">Adirondack Chair</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 98 pcs</span></h5>
+                                <h5 class="font-16 mt-0 sp-line-1"><a href="ecommerce-prduct-detail.html" class="text-dark">{{ item.name | limitString }}</a> </h5>
+
+                                <h5 class="m-0">
+                                    <span class="badge badge-success badge-pill mr-1" v-for="(cate, key) in item.get_categories" :key="key">{{ cate.name | limitString }}</span>
+                                </h5>
                             </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $39
-                                </div>
-                            </div>
+
                         </div> <!-- end row -->
+                        <div class="col-auto mt-2">
+                            <div class="product-price-tag">
+                                {{item.price | numberFormat}}
+                            </div>
+                        </div>
                     </div> <!-- end product info-->
                 </div> <!-- end card-box-->
             </div> <!-- end col-->
-            
+
         </div>
         <div class="row">
-            <div class="col-12">
-                <ul class="pagination pagination-rounded justify-content-end mb-3">
-                    <li class="page-item">
-                        <a class="page-link" href="javascript: void(0);" aria-label="Previous">
-                            <span aria-hidden="true">«</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript: void(0);" aria-label="Next">
-                            <span aria-hidden="true">»</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </div> <!-- end col-->
+            <paginate :datas="products" @reloadListProduct="reloadProducts"></paginate>
         </div>
-    </div>    
+    </div>
 </template>
 <script>
-import {listProduct} from '@/api/product.js';
-
+import {listProduct, removeProduct } from '@/api/product.js';
+import Paginate from '@/components/admin/Paginate';
 export default {
+    components: {
+        Paginate
+    },
     data() {
         return {
-            products: []
+            products: {}
         }
     },
     methods: {
@@ -123,15 +103,30 @@ export default {
         async getProducts() {
             try {
                 let data = await listProduct();
-                this.products = data.data;
+                this.products = data;
             } catch(err) {
                 console.log(err);
             }
+        },
+        async remove(product_id) {
+            if(confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                try {
+                    let data = await removeProduct({product_id});
+                    this.getProducts();
+                    alert('Xóa sản phẩm thành công');
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+
+        },
+        reloadProducts(result) {
+            this.products = result.data;
         }
     },
     created() {
         this.getProducts();
-    }    
+    }
 }
 </script>
 <style lang="scss" scoped>
