@@ -253,6 +253,13 @@ export default {
 
         getCkeditor(){
             CKEDITOR.replace('editor');
+            CKEDITOR.on('instanceReady', (evt) => {
+                CKEDITOR.instances.editor.setData(this.product.content);
+            });
+
+            CKEDITOR.instances.editor.on('change', () => {
+                this.product.content = CKEDITOR.instances.editor.getData();
+            });
         },
         addOption() {
             let check = true;
@@ -332,10 +339,13 @@ export default {
     created() {
         this.listCategories();
         this.find(this.$route.params.id);
+
     },
     mounted() {
         this.getCkeditor();
         let self = this;
+
+
         window.addEventListener('message', function(result) {
             let data = result.data;
             if(data.type === 'file-selected') {

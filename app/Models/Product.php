@@ -110,6 +110,7 @@ class Product extends Model
     {
         try
         {
+
             $product = Product::findOrFail($params['product_id']);
 
             $status = $this->_convertStatus($params['status']);
