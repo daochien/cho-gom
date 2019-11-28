@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Cache;
 class Categories extends Model
 {
     use SoftDeletes;
@@ -17,7 +17,7 @@ class Categories extends Model
         'name', 'alias', 'parent_id', 'uid', 'avatar', 'status', 'options', 'ordinal'
     ];
 
-
+    CONST KEY_LIST_CATE = 'list_cache'; // cache list danh muc
     /**
      * lay danh sach danh muc
      *
@@ -58,4 +58,46 @@ class Categories extends Model
         return $data;
     }
 
+
+    /**
+     * font-end lay danh sach danh muc
+     *
+    */
+    public function categoriesFE()
+    {
+        $keyCache = self::KEY_LIST_CATE;
+        if (Cache::has($keyCache))
+        {
+            return Cache::get($keyCache);
+        }
+        else
+        {
+            $cates =  Categories::select('cate_id', 'name', 'alias')->where(['parent_id' => 0, 'status' => 1])->with('childrenCategories')->get()->toArray();
+            Cache::put($keyCache, $cates, 60);
+            return $cates;
+        }
+    }
+
+    public function hasManyCategories()
+    {
+        return $this->hasMany(Categories::class, 'parent_id');
+    }
+
+    public function childrenCategories()
+	{
+	    return $this->hasMany(Categories::class, 'parent_id')->select('cate_id', 'name', 'alias', 'parent_id')->with('childrenCategories');
+	}
+
+    public function removeCache($key = 'all')
+    {
+        if($key == 'all')
+        {
+            Cache::flush();
+        }
+        else
+        {
+
+        }
+        Cache::forget($key);
+    }
 }

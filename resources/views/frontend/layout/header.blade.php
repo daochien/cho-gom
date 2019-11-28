@@ -229,237 +229,38 @@
                         <span>Danh mục sản phẩm</span>
                         <div class="nav-cate">
                             <ul id="menu2017">
-
-                                <li class="dropdown menu-item-count">
-                                    <a class="evo-categories-a" href="/noi-chao" title="Nồi chảo">Nồi chảo<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                    <div class="subcate gd-menu">
-                                        <div class="evo-cate-list ">
-
-                                            <aside class="aside-evo">
-                                                <a class="evo-categories-main-sub" href="/bo-noi" title="Bộ nồi">Bộ nồi<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                                <div class="list-evo-categories-main-sub">
-
-                                                    <a href="/" title="Nồi chảo">Nồi chảo</a>
-
-                                                    <a href="/" title="Đồ gang">Đồ gang</a>
-
-                                                    <a href="/" title="Dao, kéo">Dao, kéo</a>
-
-                                                    <a href="/" title="Dụng cụ ăn">Dụng cụ ăn</a>
-
-                                                </div>
-                                            </aside>
-
-                                            <aside class="aside-evo">
-                                                <a class="evo-categories-main-sub" href="/noi-chao-inox" title="Nồi, chảo Inox">Nồi, chảo Inox<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                                <div class="list-evo-categories-main-sub">
-
-                                                    <a href="/noi-inox" title="Nồi Inox">Nồi Inox</a>
-
-                                                    <a href="/chao-inox" title="Chảo Inox">Chảo Inox</a>
-
-                                                    <a href="/noi-chien-khong-dau" title="Nồi chiên không dầu">Nồi chiên không dầu</a>
-
-                                                </div>
-                                            </aside>
-
-                                            <aside class="aside-evo">
-                                                <a class="evo-categories-main-sub" href="/chao-chong-dinh" title="Chảo chống dính">Chảo chống dính<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                                <div class="list-evo-categories-main-sub">
-
-                                                    <a href="/chao-xao" title="Chảo xào">Chảo xào</a>
-
-                                                    <a href="/chao-chien" title="Chảo chiên">Chảo chiên</a>
-
-                                                    <a href="/chao-duoi-20cm" title="Chảo dưới 20cm">Chảo dưới 20cm</a>
-
-                                                    <a href="/chao-25-30-cm" title="Chảo 25 - 30 cm">Chảo 25 - 30 cm</a>
-
-                                                </div>
-                                            </aside>
-
-                                            <aside class="aside-evo">
-                                                <a class="evo-categories-main-sub" href="/noi-ap-suat" title="Nồi áp suất">Nồi áp suất<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                                <div class="list-evo-categories-main-sub">
-
-                                                    <a href="/noi-ap-suat-co" title="Nồi áp suất cơ">Nồi áp suất cơ</a>
-
-                                                    <a href="/noi-ap-suat-dien-tu" title="Nồi áp suất điện tử">Nồi áp suất điện tử</a>
-
-                                                    <a href="/noi-ap-suat-cong-nghiep" title="Nồi áp suất công nghiệp">Nồi áp suất công nghiệp</a>
-
-                                                </div>
-                                            </aside>
-
-                                            <aside class="aside-evo">
-                                                <a class="evo-categories-main-sub" href="/noi-com-dien" title="Nồi cơm điện">Nồi cơm điện<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                                <div class="list-evo-categories-main-sub">
-
-                                                    <a href="/noi-com-dien-mini" title="Nồi cơm điện mini">Nồi cơm điện mini</a>
-
-                                                    <a href="/noi-com-dien-nap-lien" title="Nồi cơm điện nắp liền">Nồi cơm điện nắp liền</a>
-
-                                                    <a href="/noi-com-dien-tu" title="Nồi cơm điện tử">Nồi cơm điện tử</a>
-
-                                                    <a href="/noi-com-dien-cao-tang" title="Nồi cơm điện cao tầng">Nồi cơm điện cao tầng</a>
-
-                                                </div>
-                                            </aside>
-
-                                            <aside class="aside-evo">
-                                                <a class="evo-categories-main-sub" href="/noi-chien-khong-dau-1" title="Nồi chiên không dầu">Nồi chiên không dầu<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                                <div class="list-evo-categories-main-sub">
-
-                                                    <a href="/noi-chien-lock-lock" title="Nồi chiên Lock&Lock">Nồi chiên Lock&Lock</a>
-
-                                                    <a href="/noi-chien-philip" title="Nồi chiên Philip">Nồi chiên Philip</a>
-
-                                                    <a href="/noi-chien-magic" title="Nồi chiên Magic">Nồi chiên Magic</a>
-
-                                                </div>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/noi-da-nang" title="Nồi đa năng">Nồi đa năng</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/noi-u-noi-nau-chao" title="Nồi ủ, Nồi nấu cháo">Nồi ủ, Nồi nấu cháo</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/noi-nau-pho" title="Nồi nấu phở">Nồi nấu phở</a>
-                                            </aside>
-
-                                        </div>
-
-                                        <div class="evo-banner-cate hidden-sm hidden-xs">
-                                            <a href="#" title="Nồi chảo">
-                                                <img data-src="//bizweb.dktcdn.net/100/361/971/themes/729792/assets/evo-cate-image-1.jpg?1572918753291" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="Nồi chảo" class="lazy img-responsive center-block" />
+                                @if(!empty($cates))
+                                    @foreach($cates as $cate)
+                                        <li class="menu-item-count {{ !empty($cate['children_categories']) ? 'dropdown' : '' }}">
+                                            <a class="evo-categories-a" href="/noi-chao" title="{{$cate['name']}}">
+                                                {{ $cate['name'] }}
+                                                @if(!empty($cate['children_categories']))
+                                                    <i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i>
+                                                @endif
                                             </a>
-                                        </div>
+                                            @if(!empty($cate['children_categories']))
+                                            <div class="subcate gd-menu">
+                                                <div class="evo-cate-list ">
+                                                    @foreach($cate['children_categories'] as $item)
+                                                        <aside class="aside-evo">
+                                                            <a class="evo-categories-main-sub" href="/bo-noi" title="{{$item['name']}}">
+                                                                {{ $item['name'] }}
+                                                            </a>
+                                                        </aside>
+                                                    @endforeach
+                                                </div>
 
-                                    </div>
-                                </li>
+                                                <div class="evo-banner-cate hidden-sm hidden-xs">
+                                                    <a href="#" title="Nồi chảo">
+                                                        <img data-src="//bizweb.dktcdn.net/100/361/971/themes/729792/assets/evo-cate-image-1.jpg?1572918753291" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="Nồi chảo" class="lazy img-responsive center-block" />
+                                                    </a>
+                                                </div>
 
-                                <li class="dropdown menu-item-count">
-                                    <a class="evo-categories-a" href="/do-gang" title="Đồ gang">Đồ gang<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                    <div class="subcate gd-menu">
-                                        <div class="evo-cate-list ">
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/noi-gang" title="Nồi gang">Nồi gang</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/chao-gang" title="Chảo gang">Chảo gang</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/chao-trang-men" title="Chảo tráng men">Chảo tráng men</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/dung-cu-nuong" title="Dụng cụ nướng">Dụng cụ nướng</a>
-                                            </aside>
-
-                                        </div>
-
-                                        <div class="evo-banner-cate hidden-sm hidden-xs">
-                                            <a href="#" title="Đồ gang">
-                                                <img data-src="//bizweb.dktcdn.net/100/361/971/themes/729792/assets/evo-cate-image-2.jpg?1572918753291" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="Đồ gang" class="lazy img-responsive center-block" />
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </li>
-
-                                <li class="dropdown menu-item-count">
-                                    <a class="evo-categories-a" href="/dao-keo" title="Dao, kéo">Dao, kéo<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                    <div class="subcate gd-menu">
-                                        <div class="evo-cate-list ">
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/dao-bo" title="Dao bộ">Dao bộ</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/dao-le" title="Dao lẻ">Dao lẻ</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/keo" title="Kéo">Kéo</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/dung-cu-bao" title="Dụng cụ bào">Dụng cụ bào</a>
-                                            </aside>
-
-                                        </div>
-
-                                        <div class="evo-banner-cate hidden-sm hidden-xs">
-                                            <a href="#" title="Dao, kéo">
-                                                <img data-src="//bizweb.dktcdn.net/100/361/971/themes/729792/assets/evo-cate-image-3.jpg?1572918753291" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="Dao, kéo" class="lazy img-responsive center-block" />
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </li>
-
-                                <li class="dropdown menu-item-count">
-                                    <a class="evo-categories-a" href="/dung-cu-an" title="Dụng cụ ăn">Dụng cụ ăn<i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i></a>
-                                    <div class="subcate gd-menu">
-                                        <div class="evo-cate-list fix-evo-cate-list">
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/bat-dua" title="Bát đũa">Bát đũa</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/dao-thia-dia" title="Dao, thìa, dĩa">Dao, thìa, dĩa</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/khan-an" title="Khăn ăn">Khăn ăn</a>
-                                            </aside>
-
-                                            <aside>
-                                                <a class="evo-categories-main-sub" href="/ly-coc-chen" title="Ly, cốc, chén">Ly, cốc, chén</a>
-                                            </aside>
-
-                                        </div>
-
-                                    </div>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/do-dung-gia-dinh" title="Đồ dùng gia đình">Đồ dùng gia đình</a>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/ve-sinh-nha-cua" title="Vệ sinh nhà cửa">Vệ sinh nhà cửa</a>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/do-gia-dung" title="Đồ gia dụng">Đồ gia dụng</a>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/dung-cu-nha-bep" title="Dụng cụ nhà bếp">Dụng cụ nhà bếp</a>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/gia-dung-nha-bep" title="Gia dụng nhà bếp">Gia dụng nhà bếp</a>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/thiet-bi-gia-dinh" title="Thiết bị gia đình">Thiết bị gia đình</a>
-                                </li>
-
-                                <li class="menu-item-count">
-                                    <a class="evo-categories-a" href="/bach-hoa" title="Bách hóa">Bách hóa</a>
-                                </li>
-
+                                            </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                     </div>

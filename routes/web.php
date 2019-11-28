@@ -16,6 +16,7 @@ Route::get('/', 'FrontEnd\HomeController@home')->name('home');
 Route::get('/products', 'FrontEnd\HomeController@products')->name('products');
 Route::get('/product-detail', 'FrontEnd\HomeController@detail')->name('detail');
 Route::get('/cart', 'FrontEnd\HomeController@cart')->name('cart');
+Route::get('/die-web', 'FrontEnd\HomeController@dieWeb')->name('dieWeb');
 
 /**
  * list route admin

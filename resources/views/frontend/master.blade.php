@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title')</title>
+    <title>Chợ Gốm Sứ - @yield('title')</title>
     <link href="{{ asset('frontend/css/bootstrap.scss.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('frontend/css/plugin.scss.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('frontend/css/base.scss.css') }}" rel="stylesheet" type="text/css" />
@@ -17,7 +17,7 @@
 <body class="{{ @$class }}">
     @stack('header_js')
 
-    @include('frontend.layout.header', ['class_menu' => $menu])
+    @include('frontend.layout.header', ['class_menu' => $menu, 'cates' => $cates])
 
     @yield('content')
 

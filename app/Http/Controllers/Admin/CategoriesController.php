@@ -49,7 +49,8 @@ class CategoriesController extends Controller
                 'alias' => str_slug($request->name),
                 'uid' => Auth::user()->id,
                 'status' => $request->status,
-                'ordinal' => $request->ordinal
+                'ordinal' => $request->ordinal,
+                'parent_id' => $request->parent_id
             ]);
 
             if($cate->cate_id)
@@ -135,6 +136,7 @@ class CategoriesController extends Controller
             $cate->ordinal = $request->ordinal;
             $cate->avatar = $request->avatar;
             $cate->uid = Auth::user()->id;
+            $cate->parent_id = $request->parent_id;
             $cate->save();
 
             return response()->json([

@@ -1,4 +1,6 @@
-@extends('frontend.master', ['class' => 'index', 'menu' => ''])
+@extends('frontend.master', ['class' => 'index', 'menu' => '', 'cates' => $cates])
+@section('title', 'Trang chủ')
+
 @push('css')
     <link href="{{ asset('frontend/css/evo-index.scss.css') }}" rel="stylesheet" type="text/css" />
 @endpush
