@@ -196,7 +196,7 @@
         <div id="file-manager" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-full">
                 <div class="modal-content" style="height: 600px;">
-                    <iframe src="https://chogom-dev.com/laravel-filemanager" height="600px;" style="border:none;"></iframe>
+                    <iframe :src="iframeUpload" height="600px;" style="border:none;"></iframe>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
@@ -237,6 +237,7 @@ export default {
             },
             type_image: '',
             errors: [],
+            iframeUpload: ''
         }
     },
     methods: {
@@ -259,6 +260,13 @@ export default {
 
         getCkeditor(){
             CKEDITOR.replace('editor');
+            CKEDITOR.on('instanceReady', (evt) => {
+                CKEDITOR.instances.editor.setData(this.product.content);
+            });
+
+            CKEDITOR.instances.editor.on('change', () => {
+                this.product.content = CKEDITOR.instances.editor.getData();
+            });
         },
         addOption() {
             let check = true;
@@ -314,12 +322,14 @@ export default {
     },
     created() {
         this.listCategories();
+        this.iframeUpload = 'https://chogom-dev.com/laravel-filemanager';
     },
     mounted() {
         this.getCkeditor();
         let self = this;
         window.addEventListener('message', function(result) {
             let data = result.data;
+
             if(data.type === 'file-selected') {
                 if(self.type_image === 'avatars') {
                     if(self.product.avatars.indexOf(data.path) == -1) {

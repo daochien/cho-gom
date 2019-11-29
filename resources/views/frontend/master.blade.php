@@ -15,6 +15,7 @@
 
 </head>
 <body class="{{ @$class }}">
+
     @stack('header_js')
 
     @include('frontend.layout.header', ['class_menu' => $menu, 'cates' => $cates])
@@ -30,6 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="{{asset('js/web.js')}}" type="text/javascript"></script>
     <script src="{{asset('frontend/js/main.js')}}" type="text/javascript"></script>
 
 </body>

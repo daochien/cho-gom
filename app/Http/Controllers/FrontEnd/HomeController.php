@@ -20,6 +20,7 @@ class HomeController extends Controller
     {
         $category = new Categories();
         $cates = $category->categoriesFE();
+        //dd($cates);
         return view('frontend.page.home', compact('cates'));
     }
 

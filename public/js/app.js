@@ -2601,17 +2601,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3713,7 +3702,8 @@ __webpack_require__.r(__webpack_exports__);
         }]
       },
       type_image: '',
-      errors: []
+      errors: [],
+      iframeUpload: ''
     };
   },
   methods: {
@@ -3753,7 +3743,15 @@ __webpack_require__.r(__webpack_exports__);
       this.product.images.splice(index, 1);
     },
     getCkeditor: function getCkeditor() {
+      var _this = this;
+
       CKEDITOR.replace('editor');
+      CKEDITOR.on('instanceReady', function (evt) {
+        CKEDITOR.instances.editor.setData(_this.product.content);
+      });
+      CKEDITOR.instances.editor.on('change', function () {
+        _this.product.content = CKEDITOR.instances.editor.getData();
+      });
     },
     addOption: function addOption() {
       var check = true;
@@ -3828,6 +3826,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.listCategories();
+    this.iframeUpload = 'https://chogom-dev.com/laravel-filemanager';
   },
   mounted: function mounted() {
     this.getCkeditor();
@@ -7276,16 +7275,6 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(
-                                item.parent.id == 0 ? "Root" : item.parent.name
-                              ) +
-                              "\n                                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
                           item.status
                             ? _c(
                                 "span",
@@ -7407,58 +7396,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("hr"),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group mb-2" }, [
-              _c("label", [_vm._v("Danh mục cha")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.categorie.parent_id,
-                      expression: "categorie.parent_id"
-                    }
-                  ],
-                  staticClass: "form-control form-control-sm",
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.categorie,
-                        "parent_id",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "0" } }, [_vm._v("Root")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.categories, function(item, index) {
-                    return item.cate_id != _vm.categorie.cate_id
-                      ? _c(
-                          "option",
-                          { key: index, domProps: { value: item.cate_id } },
-                          [_vm._v(_vm._s(item.name))]
-                        )
-                      : _vm._e()
-                  })
-                ],
-                2
-              )
-            ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group mb-2" }, [
               _c("label", [_vm._v("Tên danh mục")]),
@@ -7697,8 +7634,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Thứ tự")]),
         _vm._v(" "),
         _c("th", [_vm._v("Tên")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Parent")]),
         _vm._v(" "),
         _c("th", [_vm._v("Hiển thị")]),
         _vm._v(" "),
@@ -10035,7 +9970,34 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
+        attrs: {
+          id: "file-manager",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "full-width-modalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-full" }, [
+          _c(
+            "div",
+            { staticClass: "modal-content", staticStyle: { height: "600px" } },
+            [
+              _c("iframe", {
+                staticStyle: { border: "none" },
+                attrs: { src: _vm.iframeUpload, height: "600px;" }
+              })
+            ]
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -10070,42 +10032,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        staticStyle: { display: "none" },
-        attrs: {
-          id: "file-manager",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "full-width-modalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-full" }, [
-          _c(
-            "div",
-            { staticClass: "modal-content", staticStyle: { height: "600px" } },
-            [
-              _c("iframe", {
-                staticStyle: { border: "none" },
-                attrs: {
-                  src: "https://chogom-dev.com/laravel-filemanager",
-                  height: "600px;"
-                }
-              })
-            ]
-          )
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true

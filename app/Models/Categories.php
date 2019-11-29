@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cache;
+use App\Models\Product;
 class Categories extends Model
 {
     use SoftDeletes;
@@ -14,7 +15,7 @@ class Categories extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'name', 'alias', 'parent_id', 'uid', 'avatar', 'status', 'options', 'ordinal'
+        'name', 'alias', 'uid', 'avatar', 'status', 'options', 'ordinal'
     ];
 
     CONST KEY_LIST_CATE = 'list_cache'; // cache list danh muc
@@ -44,10 +45,6 @@ class Categories extends Model
                 'cate_id' => $cate->cate_id,
                 'name' => $cate->name,
                 'alias' => $cate->alias,
-                'parent' => [
-                    'id' => !empty($parent) ? $parent->cate_id : 0,
-                    'name' => !empty($parent) ? $parent->name : ''
-                ],
                 'avatar' => $cate->avatar,
                 'status' => $cate->status,
                 'ordinal' => $cate->ordinal,
@@ -66,28 +63,31 @@ class Categories extends Model
     public function categoriesFE()
     {
         $keyCache = self::KEY_LIST_CATE;
+        Cache::flush();
         if (Cache::has($keyCache))
         {
             return Cache::get($keyCache);
         }
         else
         {
-            $cates =  Categories::select('cate_id', 'name', 'alias')->where(['parent_id' => 0, 'status' => 1])->with('childrenCategories')->get()->toArray();
+            $cates =  Categories::select('cate_id', 'name', 'alias')->where(['parent_id' => 0, 'status' => 1])->with(['getProducts'])->get()->toArray();
             Cache::put($keyCache, $cates, 60);
             return $cates;
         }
     }
 
-    public function hasManyCategories()
+    /**
+     * lien ket voi bang san pham
+    */
+    public function getProducts()
     {
-        return $this->hasMany(Categories::class, 'parent_id');
+        return $this->belongsToMany(Product::class, 'product_categories', 'cate_id', 'product_id')
+        ->select('products.product_id', 'products.name', 'products.alias', 'products.images', 'products.avatars', 'products.price', 'products.discount');
     }
 
-    public function childrenCategories()
-	{
-	    return $this->hasMany(Categories::class, 'parent_id')->select('cate_id', 'name', 'alias', 'parent_id')->with('childrenCategories');
-	}
-
+    /**
+     * xoa cache
+    */
     public function removeCache($key = 'all')
     {
         if($key == 'all')

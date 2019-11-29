@@ -31,7 +31,6 @@
                                     <tr>
                                         <th>Thứ tự</th>
                                         <th>Tên</th>
-                                        <th>Parent</th>
                                         <th>Hiển thị</th>
                                         <th>Create Date</th>
                                         <th>Actions</th>
@@ -46,9 +45,7 @@
                                             <img v-show="item.avatar" :src="item.avatar" alt="table-user" class="mr-2 rounded-circle">
                                             <a href="javascript:void(0);" @click="handlerUpdate(item)" class="text-body font-weight-semibold">{{ item.name }} </a>
                                         </td>
-                                        <td>
-                                            {{ item.parent.id == 0 ? 'Root' : item.parent.name }}
-                                        </td>
+
                                         <td>
                                             <span class="badge badge-success" v-if="item.status">Có</span>
                                             <span class="badge badge-danger" v-if="!item.status">không</span>
@@ -77,14 +74,6 @@
                             <button type="button" class="btn btn-danger waves-effect waves-light"  @click="resetForm()">Reset</button>
                         </div>
                         <hr>
-
-                        <div class="form-group mb-2">
-                            <label>Danh mục cha</label>
-                            <select class="form-control form-control-sm" v-model="categorie.parent_id">
-                                <option value="0">Root</option>
-                                <option v-for="(item, index) in categories" :key="index" :value="item.cate_id" v-if="item.cate_id != categorie.cate_id">{{ item.name }}</option>
-                            </select>
-                        </div>
                         <div class="form-group mb-2">
                             <label>Tên danh mục</label>
                             <input type="text" :class="['form-control form-control-sm', errors.name && !categorie.name ? 'parsley-error' : '']" v-model="categorie.name">

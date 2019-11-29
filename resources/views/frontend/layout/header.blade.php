@@ -225,44 +225,10 @@
                         </div>
                     </div>
 
-                    <div class="mainmenu {{ $class_menu }}">
+                    <div class="mainmenu {{ $class_menu }}" id="web_master">
                         <span>Danh mục sản phẩm</span>
-                        <div class="nav-cate">
-                            <ul id="menu2017">
-                                @if(!empty($cates))
-                                    @foreach($cates as $cate)
-                                        <li class="menu-item-count {{ !empty($cate['children_categories']) ? 'dropdown' : '' }}">
-                                            <a class="evo-categories-a" href="/noi-chao" title="{{$cate['name']}}">
-                                                {{ $cate['name'] }}
-                                                @if(!empty($cate['children_categories']))
-                                                    <i class="fa fa-angle-down hidden-lg hidden-md" data-toggle="dropdown"></i>
-                                                @endif
-                                            </a>
-                                            @if(!empty($cate['children_categories']))
-                                            <div class="subcate gd-menu">
-                                                <div class="evo-cate-list ">
-                                                    @foreach($cate['children_categories'] as $item)
-                                                        <aside class="aside-evo">
-                                                            <a class="evo-categories-main-sub" href="/bo-noi" title="{{$item['name']}}">
-                                                                {{ $item['name'] }}
-                                                            </a>
-                                                        </aside>
-                                                    @endforeach
-                                                </div>
+                        <menu-component :cates="{{ json_encode($cates) }}"></menu-component>
 
-                                                <div class="evo-banner-cate hidden-sm hidden-xs">
-                                                    <a href="#" title="Nồi chảo">
-                                                        <img data-src="//bizweb.dktcdn.net/100/361/971/themes/729792/assets/evo-cate-image-1.jpg?1572918753291" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="Nồi chảo" class="lazy img-responsive center-block" />
-                                                    </a>
-                                                </div>
-
-                                            </div>
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-9 no-padding">
