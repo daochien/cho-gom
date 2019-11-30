@@ -18,21 +18,25 @@
 
     @stack('header_js')
 
-    @include('frontend.layout.header', ['class_menu' => $menu, 'cates' => $cates])
+    <div id="web_master">
+        @include('frontend.layout.header', ['class_menu' => $menu, 'cates' => $cates])
 
-    @yield('content')
+        @yield('content')
 
-    @include('frontend.layout.footer')
+        @include('frontend.layout.footer')
+    </div>
 
     @stack('js')
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.5.1/intersection-observer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <script src="{{asset('js/web.js')}}" type="text/javascript"></script>
-    <script src="{{asset('frontend/js/main.js')}}" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="{{asset('frontend/js/jquery.form-validator.min.js')}}" ></script>
+    <script src="{{asset('frontend/js/intersection-observer.js')}}"></script>
+
+    <script src="{{asset('frontend/js/lazyload.min.js')}}" ></script>
+
+    <script src="{{asset('frontend/js/jquery.cookie.min.js')}}"></script>
+    <script src="{{asset('js/web.js?v='.time())}}"></script>
+    <script src="{{asset('frontend/js/main.js')}}" ></script>
 
 </body>
 </html>

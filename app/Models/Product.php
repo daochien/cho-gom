@@ -26,6 +26,11 @@ class Product extends Model
         'name', 'alias', 'code', 'uid', 'avatars', 'status', 'images', 'price', 'weight', 'summary', 'content'
     ];
 
+    protected $casts = [
+        'avatars' => 'array',
+        'images' => 'array'
+    ];
+
     /**
      * them moi san pham
      * @param Array params
@@ -99,6 +104,23 @@ class Product extends Model
         {
             return false;
         }
+    }
+    /**
+     * lay danh sach san pham view frontEnd
+     * @param Array params
+     * @return products
+    */
+
+    public static function getProduct($params)
+    {
+        $query = Product::select('name', 'alias', 'products.product_id', 'price', 'avatars', 'discount', 'status')->orderBy('products.product_id', 'desc')
+                ->join('product_categories', 'products.product_id', '=', 'product_categories.product_id');
+        if(!empty($params['cate_id']))
+        {
+            $query->where('product_categories.cate_id', $params['cate_id']);
+        }
+
+        return $query->whereRaw('(status & 1)')->limit(9)->get()->toArray();
     }
 
     /**
@@ -213,4 +235,9 @@ class Product extends Model
 
         return $insert;
     }
+
+
+    public function getColumnNameAttribute($value) {
+        return json_decode($value);
+      }
 }

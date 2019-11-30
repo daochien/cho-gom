@@ -61,79 +61,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <script>
-                                            $(document).ready(function() {
-                                                var name_pro = '';
-                                                var alias_pro = '';
-                                                var featured_image_pro = '';
-                                                var url_pro = '';
-                                                var variant_id_pro = '';
 
-                                                var price_pro = 'Liên hệ';
-
-                                                var price_sale_pro = '';
-                                                var hasSale_pro = 'false';
-                                                var percent_sale_pro = '';
-
-                                                var array_list = [{
-                                                    'name': name_pro,
-                                                    'alias': alias_pro,
-                                                    'featured_image': featured_image_pro,
-                                                    'url': url_pro,
-                                                    'variant_id': variant_id_pro,
-                                                    'price': price_pro,
-                                                    'compare_at_price': price_sale_pro,
-                                                    'hasSale': hasSale_pro,
-                                                    'percent_sale': percent_sale_pro
-                                                }];
-                                                var list_viewed_pro_old = localStorage.getItem('last_viewed_products');
-                                                var last_viewed_pro_new = "";
-                                                if (list_viewed_pro_old == null || list_viewed_pro_old == '')
-                                                    last_viewed_pro_new = array_list;
-                                                else {
-                                                    var list_viewed_pro_old = JSON.parse(localStorage.last_viewed_products);
-                                                    list_viewed_pro_old.splice(20, 1);
-                                                    for (i = 0; i < list_viewed_pro_old.length; i++) {
-                                                        if (list_viewed_pro_old[i].alias == alias_pro) {
-                                                            list_viewed_pro_old.splice(i, 1);
-                                                            break;
-                                                        }
-                                                    }
-                                                    list_viewed_pro_old.unshift(array_list[0]);
-                                                    last_viewed_pro_new = list_viewed_pro_old;
-                                                }
-                                                localStorage.setItem('last_viewed_products', JSON.stringify(last_viewed_pro_new));
-                                                var last_viewd_pro_array = JSON.parse(localStorage.last_viewed_products);
-
-                                                var size_pro_review = last_viewd_pro_array.length;
-                                                if (size_pro_review >= 14) {
-                                                    size_pro_review = 14;
-                                                } else {
-                                                    size_pro_review = last_viewd_pro_array.length;
-                                                }
-                                                if (size_pro_review < 2) {
-                                                    jQuery('.recent_products-row').addClass('hidden');
-                                                } else {
-                                                    jQuery('.no-recently').addClass('hidden');
-                                                }
-                                                if (size_pro_review > 0) {
-                                                    for (i = 0; i < size_pro_review; i++) {
-                                                        var alias_product = last_viewd_pro_array[i];
-                                                        if (!!alias_product.alias) {
-                                                            Ant.clone_item_view(alias_product);
-                                                        }
-                                                    }
-                                                }
-                                                $('#recent-content').slick({
-                                                    dots: true,
-                                                    arrows: false,
-                                                    slidesToShow: 8,
-                                                    slidesToScroll: 8,
-                                                    verticalSwiping: true,
-                                                    infinite: false
-                                                });
-                                            });
-                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +153,7 @@
                         </div>
                     </div>
 
-                    <div class="mainmenu {{ $class_menu }}" id="web_master">
+                    <div class="mainmenu {{ $class_menu }}">
                         <span>Danh mục sản phẩm</span>
                         <menu-component :cates="{{ json_encode($cates) }}"></menu-component>
 

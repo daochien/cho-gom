@@ -57,7 +57,7 @@
                     </div>
 
                     <div>
-                        <img v-for="(avatar, key) in JSON.parse(item.avatars)" :key="key" v-show="key == 0" :src="avatar" alt="product-pic" class="img-fluid" />
+                        <img v-for="(avatar, key) in item.avatars" :key="key" v-show="key == 0" :src="avatar" alt="product-pic" class="img-fluid" />
                     </div>
 
                     <div class="product-info">

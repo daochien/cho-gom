@@ -301,8 +301,8 @@ export default {
             this.product.content = data.content;
             this.product.price = data.price;
             this.product.weight = data.weight;
-            this.product.avatars = JSON.parse(data.avatars);
-            this.product.images = JSON.parse(data.images);
+            this.product.avatars = data.avatars;
+            this.product.images = data.images;
             this.product.options = data.get_options;
             this.product.cate_ids = data.get_categories;
 

@@ -82,7 +82,8 @@ class Categories extends Model
     public function getProducts()
     {
         return $this->belongsToMany(Product::class, 'product_categories', 'cate_id', 'product_id')
-        ->select('products.product_id', 'products.name', 'products.alias', 'products.images', 'products.avatars', 'products.price', 'products.discount');
+        ->select('products.product_id', 'products.name', 'products.alias', 'products.images', 'products.avatars', 'products.price', 'products.discount', 'products.status')
+        ->whereRaw('(products.status & 1)')->limit(10);
     }
 
     /**
