@@ -359,7 +359,7 @@ function useFile(file_url) {
     } else {
         // No editor found, open/download file using browser's default method
         ///alert('Đã chọn');
-        window.parent.postMessage({
+        parent.postMessage({
             type: 'file-selected',
             path: url,
         }, '*');

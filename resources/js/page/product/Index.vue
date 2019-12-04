@@ -28,15 +28,10 @@
             <div class="col-8">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Thông tin chung</h5>
                         <div class="form-group mb-2">
                             <label>Danh mục</label>
-                            <!-- <select :class="['form-control form-control-sm', errors.cate_ids && product.cate_ids.length == 0 ? 'parsley-error' : '']" v-model="product.cate_ids">
-                                <option value="0">--Chọn--</option>
-                                <option v-for="(item, index) in categories" :key="index" :value="item.cate_id" >{{ item.name }}</option>
-                            </select>
-                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
-                                <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
-                            </ul> -->
+
                             <multiselect v-model="product.cate_ids"  placeholder=" " label="name" track-by="cate_id" :options="categories" :multiple="true" ></multiselect>
                             <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.cate_ids && product.cate_ids.length == 0">
                                 <li class="parsley-required">{{ errors.cate_ids[0] }}</li>
@@ -76,13 +71,136 @@
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Giá sản phẩm</h5>
                         <div class="form-group mb-2">
-                            <label>Giá sản phẩm</label>
+                            <label>Giá gốc</label>
                             <input type="number" :class="['form-control form-control-sm', errors.price && !product.price ? 'parsley-error' : '']" v-model="product.price">
                             <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.price && !product.price">
                                 <li class="parsley-required">{{ errors.price[0] }}</li>
                             </ul>
                         </div>
+                        <div class="form-group mb-2">
+                            <p class="text-muted mb-2">Giảm giá</p>
+                            <div class="col-md-12">
+                                <div class="radio radio-success form-check-inline">
+                                    <input type="radio" id="yes_dicount" value="1" v-model="isDiscount">
+                                    <label for="yes_dicount"> Có </label>
+                                </div>
+                                <div class="radio radio-danger form-check-inline">
+                                    <input type="radio" id="no_discount" value="0" v-model="isDiscount">
+                                    <label for="no_discount"> Không </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="isDiscount == 1">
+                            <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Thông tin giảm giá</h5>
+                            <div class="form-group mb-2">
+                                <p class="text-muted mb-2">Kiểu</p>
+                                <div class="col-md-12">
+                                    <div class="radio radio-success form-check-inline">
+                                        <input type="radio" id="percent_dicount" value="percent" v-model="infoDiscount.type">
+                                        <label for="percent_dicount"> Percent </label>
+                                    </div>
+                                    <div class="radio radio-danger form-check-inline">
+                                        <input type="radio" id="percent_discount" value="direct" v-model="infoDiscount.type">
+                                        <label for="percent_discount"> Direct </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Giá trị</label>
+                                <input type="number" :class="['form-control form-control-sm', errors.value ? 'parsley-error' : '']" v-model="infoDiscount.value">
+                                <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.value">
+                                    <li class="parsley-required">{{ errors.value[0] }}</li>
+                                </ul>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Ngày bắt đầu</label>
+                                <datepicker
+                                    :language="vi"
+                                    :format="customFormatter"
+                                    :input-class="{'form-control form-control-sm': true, 'parsley-error': errors.date_start}"
+                                    :disabledDates="disabledDateStart"
+                                    @selected="selectedStartDate"
+                                    v-model="infoDiscount.date_start">
+                                </datepicker>
+
+                                <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.date_start">
+                                    <li class="parsley-required">{{ errors.date_start[0] }}</li>
+                                </ul>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label>Ngày kết thúc</label>
+                                <datepicker
+                                    :language="vi"
+                                    :format="customFormatter"
+                                    :input-class="{'form-control form-control-sm': true, 'parsley-error': errors.date_end}"
+                                    :disabledDates="disabledDateEnd"
+                                    @selected="selectedEndDate"
+                                    v-model="infoDiscount.date_end">
+                                </datepicker>
+
+                                <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.date_end">
+                                    <li class="parsley-required">{{ errors.date_end[0] }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-box">
+                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Ảnh sản phẩm</h5>
+                        <div class="form-group mb-2">
+                            <label>Ảnh đại diện</label>
+                            <div class="input-group">
+                                <div class="custom-file" data-toggle="modal" data-target="#file-manager" @click="type_image = 'avatars'">
+                                    <input type="text" :class="['custom-file-input form-control-sm', errors.avatars && product.avatars.length == 0 ? 'parsley-error' : '']" style="cursor: pointer;">
+                                    <label class="custom-file-label">Choose file</label>
+                                </div>
+
+                            </div>
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.avatars && product.avatars.length == 0">
+                                <li class="parsley-required">{{ errors.avatars[0] }}</li>
+                            </ul>
+                        </div>
+                        <div class="form-group mb-2" v-show="product.avatars">
+                            <div class="row">
+                                <div v-for="(item, index) in product.avatars" :key="index" class="col-4 mb-2">
+                                    <a class="list-image">
+                                        <i class="mdi mdi-close-circle-outline btn-remove-image"  @click="removeAvatars(index)"></i>
+                                        <img :src="item" alt="post-img" class="rounded mr-1" width="80" height="60">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Ảnh sản phẩm</label>
+                            <div class="input-group">
+                                <div class="custom-file" data-toggle="modal" data-target="#file-manager" @click="type_image = 'images'">
+                                    <input type="text" class="custom-file-input form-control-sm" style="cursor: pointer;">
+                                    <label class="custom-file-label">Choose file</label>
+                                </div>
+                            </div>
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.images && product.images.length == 0">
+                                <li class="parsley-required">{{ errors.images[0] }}</li>
+                            </ul>
+                        </div>
+                        <div class="form-group mb-2" v-show="product.images">
+                            <div class="row">
+                                <div v-for="(item, index) in product.images" :key="index" class="col-4 mb-2">
+                                    <a class="list-image">
+                                        <i class="mdi mdi-close-circle-outline btn-remove-image"  @click="removeImages(index)"></i>
+                                        <img :src="item" alt="post-img" class="rounded mr-1" width="80" height="60">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Thuộc tính sản phẩm</h5>
                         <div class="form-group mb-2">
                             <label>Trọng lượng(g)</label>
                             <input type="number" :class="['form-control form-control-sm', errors.weight && !product.weight ? 'parsley-error' : '']" v-model="product.weight">
@@ -128,51 +246,6 @@
                             </div>
 
                         </div>
-                        <div class="form-group mb-2">
-                            <label>Ảnh đại diện</label>
-                            <div class="input-group">
-                                <div class="custom-file" data-toggle="modal" data-target="#file-manager" @click="type_image = 'avatars'">
-                                    <input type="text" :class="['custom-file-input form-control-sm', errors.avatars && product.avatars.length == 0 ? 'parsley-error' : '']" style="cursor: pointer;">
-                                    <label class="custom-file-label">Choose file</label>
-                                </div>
-
-                            </div>
-                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.avatars && product.avatars.length == 0">
-                                <li class="parsley-required">{{ errors.avatars[0] }}</li>
-                            </ul>
-                        </div>
-                        <div class="form-group mb-2" v-show="product.avatars">
-                            <div class="row">
-                                <div v-for="(item, index) in product.avatars" :key="index" class="col-6 mb-2">
-                                    <a class="list-image">
-                                        <i class="mdi mdi-close-circle-outline btn-remove-image"  @click="removeAvatars(index)"></i>
-                                        <img :src="item" alt="post-img" class="rounded mr-1" width="80" height="60">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label>Ảnh sản phẩm</label>
-                            <div class="input-group">
-                                <div class="custom-file" data-toggle="modal" data-target="#file-manager" @click="type_image = 'images'">
-                                    <input type="text" class="custom-file-input form-control-sm" style="cursor: pointer;">
-                                    <label class="custom-file-label">Choose file</label>
-                                </div>
-                            </div>
-                            <ul class="parsley-errors-list filled" id="parsley-id-27" v-if="errors.images && product.images.length == 0">
-                                <li class="parsley-required">{{ errors.images[0] }}</li>
-                            </ul>
-                        </div>
-                        <div class="form-group mb-2" v-show="product.images">
-                            <div class="row">
-                                <div v-for="(item, index) in product.images" :key="index" class="col-6 mb-2">
-                                    <a class="list-image">
-                                        <i class="mdi mdi-close-circle-outline btn-remove-image"  @click="removeImages(index)"></i>
-                                        <img :src="item" alt="post-img" class="rounded mr-1" width="80" height="60">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group mb-2">
                             <label>Thêm thuộc tính </label> <button class="btn btn-outline-pink btn-rounded waves-effect waves-light btn-xs" @click="addOption()">+ Thêm</button>
@@ -209,10 +282,14 @@ import { listCate, create } from '@/api/categories.js';
 import { addProduct } from '@/api/product.js';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Multiselect from 'vue-multiselect';
+import moment from 'moment';
+import {en, vi} from 'vuejs-datepicker/dist/locale';
+import Datepicker from 'vuejs-datepicker';
 
 export default {
     components: {
-        Multiselect
+        Multiselect,
+        Datepicker
     },
     data() {
         return {
@@ -235,12 +312,41 @@ export default {
                     }
                 ]
             },
+            isDiscount: 0,
+            infoDiscount: {
+                type: "percent", // direct
+                value: '',
+                exp: ''
+            },
             type_image: '',
             errors: [],
-            iframeUpload: ''
+            iframeUpload: '',
+            vi: vi,
+            disabledDateStart: {
+                to: new Date(Date.now() - 8640000),
+                from: '',
+            },
+            disabledDateEnd: {
+                to: new Date(Date.now() - 8640000),
+                from: '',
+            },
         }
     },
     methods: {
+
+        selectedStartDate(date) {
+            this.disabledDateEnd.to = date;
+        },
+        selectedEndDate(date) {
+            this.disabledDateStart.from = date;
+        },
+
+        customFormatter(date) {
+            if(date) {
+                return moment(date).format('DD-MM-YYYY');
+            }
+            return '';
+        },
 
         //lay danh sach danh muc
         async listCategories() {
@@ -300,6 +406,10 @@ export default {
                 avatars: [],
                 status: [1],
                 images: [],
+                isDiscount: '',
+                typeDiscount: '',
+                value: '',
+                exp: '',
                 options: [
                     {
                         name: '',
@@ -307,11 +417,25 @@ export default {
                     }
                 ]
             };
+            this.isDiscount = 0,
+            this.infoDiscount = {
+                type: "percent", // direct
+                value: '',
+                date_start: '',
+                date_end: ''
+            };
             this.errors = [];
         },
         //them moi san pham
         async createProduct() {
             try {
+                this.product.isDiscount = this.isDiscount;
+                if(this.isDiscount == 1) {
+                    this.product.typeDiscount = this.infoDiscount.type;
+                    this.product.value = this.infoDiscount.value;
+                    this.product.date_start = this.infoDiscount.date_start;
+                    this.product.date_end = this.infoDiscount.date_end;
+                }
                 let data = await addProduct(this.product);
                 this.$router.push({name: 'Product'});
             } catch(err) {
@@ -322,14 +446,13 @@ export default {
     },
     created() {
         this.listCategories();
-        this.iframeUpload = 'https://chogom-dev.com/laravel-filemanager';
+        this.iframeUpload = window.__iframeUpload__+'?time='+Date.now();
     },
     mounted() {
         this.getCkeditor();
         let self = this;
         window.addEventListener('message', function(result) {
             let data = result.data;
-
             if(data.type === 'file-selected') {
                 if(self.type_image === 'avatars') {
                     if(self.product.avatars.indexOf(data.path) == -1) {
@@ -348,8 +471,9 @@ export default {
                     }
                 }
             }
-        });
-    }
+        }, true);
+    },
+
 }
 </script>
 <style lang="scss" scoped>

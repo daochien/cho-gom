@@ -167,7 +167,6 @@ export default {
         handlerUpdate(cate) {
             this.categorie = cate;
             this.categorie.type = 'update';
-            this.categorie.parent_id = cate.parent.id;
         },
 
         async updateCate() {
@@ -194,7 +193,6 @@ export default {
 
         resetForm() {
             this.categorie = {
-                parent_id: 0,
                 name: '',
                 ordinal: 1,
                 status: 1,

@@ -566,6 +566,7 @@
         </section>
         @if(!empty($cates))
         @foreach($cates as $key => $cate)
+            @if(!empty($cate->getProducts->toArray()))
             <section class="awe-section-cate-{{ $key }}">
                 <div class="section_san_pham">
                     <div class="container">
@@ -573,7 +574,7 @@
                             <div class="col-md-12">
                                 <div class="evo-index-block-product">
                                     <div class="titlecp clearfix">
-                                        <h3><a href="san-pham-moi" title="Nồi chảo">{{ $cate['name']}}</a></h3>
+                                        <h3><a href="san-pham-moi" title="{{ $cate['name'] }}">{{ $cate['name']}}</a></h3>
                                         <span class="hidden-md hidden-lg hidden-sm button_show_tab">
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
@@ -583,11 +584,11 @@
                                     <div class="evo-index-product-contain">
 
                                         <div class="evo-block-product">
-                                            @if(!empty($cate['get_products']))
-                                                @foreach($cate['get_products'] as $product)
-                                                    <product-component :product="{{ json_encode($product) }}"></product-component>
-                                                @endforeach
-                                            @endif()
+
+                                            @foreach($cate->getProducts as $product)
+                                                <product-component :product="{{ json_encode($product) }}"></product-component>
+                                            @endforeach
+
                                         </div>
 
                                     </div>
@@ -597,6 +598,7 @@
                     </div>
                 </div>
             </section>
+            @endif
         @endforeach
         @endif
 

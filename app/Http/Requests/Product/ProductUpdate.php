@@ -34,8 +34,29 @@ class ProductUpdate extends FormRequest
             'avatars' => 'required',
             'images' => 'required',
             'status' => 'required',
-            'cate_ids' => 'required'
+            'cate_ids' => 'required',
+            'isDiscount' => 'required'
         ];
+        if($this->isDiscount == 1)
+        {
+            $rules['value'] = 'required|numeric';
+            $rules['typeDiscount'] = 'required';
+            $rules['date_start'] = 'required|date';
+            $rules['date_end'] = 'required|date|after_or_equal:date_start';
+        }
+
+        if(!empty($this->typeDiscount))
+        {
+            if($this->typeDiscount == 'percent')
+            {
+                $rules['value'] = 'required|numeric|min:1|max:100';
+            }
+            if($this->typeDiscount == 'direct')
+            {
+                $rules['value'] = 'required|numeric|min:10000|lt:price';
+            }
+        }
+
         return $rules;
     }
 

@@ -70,7 +70,7 @@ class Categories extends Model
         }
         else
         {
-            $cates =  Categories::select('cate_id', 'name', 'alias')->where(['parent_id' => 0, 'status' => 1])->with(['getProducts'])->get()->toArray();
+            $cates =  Categories::select('cate_id', 'name', 'alias')->where(['parent_id' => 0, 'status' => 1])->get();
             Cache::put($keyCache, $cates, 60);
             return $cates;
         }

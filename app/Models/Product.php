@@ -23,12 +23,13 @@ class Product extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'name', 'alias', 'code', 'uid', 'avatars', 'status', 'images', 'price', 'weight', 'summary', 'content'
+        'name', 'alias', 'code', 'uid', 'avatars', 'status', 'images', 'price', 'weight', 'summary', 'content', 'discount', 'is_discount'
     ];
 
     protected $casts = [
         'avatars' => 'array',
-        'images' => 'array'
+        'images' => 'array',
+        'discount' => 'array'
     ];
 
     /**
@@ -42,20 +43,33 @@ class Product extends Model
         {
 
             $status = $this->_convertStatus($params['status']);
-
-            $product = Product::create([
+            $data = [
                 'name' => $params['name'],
                 'alias' => str_slug($params['name']),
                 'code' => $params['code'],
                 'status' => $status,
                 'summary' => $params['summary'],
                 'content' => $params['content'],
-                'avatars' => json_encode($params['avatars']),
-                'images' => json_encode($params['images']),
+                'avatars' => $params['avatars'],
+                'images' => $params['images'],
                 'uid' => Auth::user()->id,
                 'price' => $params['price'],
-                'weight' => $params['weight']
-            ]);
+                'weight' => $params['weight'],
+                'is_discount' => $params['isDiscount']
+            ];
+
+            if(!empty($params['isDiscount']))
+            {
+
+                $data['discount'] = [
+                    'type' => $params['typeDiscount'],
+                    'value' => $params['value'],
+                    'date_start' => $params['date_start'],
+                    'date_end' => $params['date_end'],
+                ];
+            }
+
+            $product = Product::create($data);
 
             if($product->product_id)
             {
@@ -113,7 +127,8 @@ class Product extends Model
 
     public static function getProduct($params)
     {
-        $query = Product::select('name', 'alias', 'products.product_id', 'price', 'avatars', 'discount', 'status')->orderBy('products.product_id', 'desc')
+
+        $query = Product::select('name', 'alias', 'products.product_id', 'price', 'avatars', 'discount', 'status', 'product_categories.cate_id')->orderBy('products.product_id', 'desc')
                 ->join('product_categories', 'products.product_id', '=', 'product_categories.product_id');
         if(!empty($params['cate_id']))
         {
@@ -143,11 +158,22 @@ class Product extends Model
             $product->status = $status;
             $product->summary = $params['summary'];
             $product->content = $params['content'];
-            $product->avatars = json_encode($params['avatars']);
-            $product->images = json_encode($params['images']);
+            $product->avatars = $params['avatars'];
+            $product->images = $params['images'];
             $product->uid = Auth::user()->id;
             $product->price = $params['price'];
             $product->weight = $params['weight'];
+            $product->is_discount = $params['isDiscount'];
+
+            if(!empty($params['isDiscount']))
+            {
+                $product->discount = [
+                    'type' => $params['typeDiscount'],
+                    'value' => $params['value'],
+                    'date_start' => $params['date_start'],
+                    'date_end' => $params['date_end'],
+                ];
+            }
 
             if($product->save())
             {
