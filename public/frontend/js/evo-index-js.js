@@ -9,44 +9,44 @@ $(document).ready(function ($) {
 		arrows: false,
 		infinite: true
 	});
-	$('.evo-block-product').slick({
-		dots: true,
-		arrows: false,
-		infinite: false,
-		speed: 300,
-		slidesToShow: 5,
-		slidesToScroll: 5,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 5,
-					slidesToScroll: 5
-				}
-			},
-			{
-				breakpoint: 991,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3
-				}
-			},
-			{
-				breakpoint: 767,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2
-				}
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2
-				}
-			}
-		]
-	});
+	// $('.evo-block-product').slick({
+	// 	dots: true,
+	// 	arrows: false,
+	// 	infinite: false,
+	// 	speed: 300,
+	// 	slidesToShow: 5,
+	// 	slidesToScroll: 5,
+	// 	responsive: [
+	// 		{
+	// 			breakpoint: 1024,
+	// 			settings: {
+	// 				slidesToShow: 5,
+	// 				slidesToScroll: 5
+	// 			}
+	// 		},
+	// 		{
+	// 			breakpoint: 991,
+	// 			settings: {
+	// 				slidesToShow: 3,
+	// 				slidesToScroll: 3
+	// 			}
+	// 		},
+	// 		{
+	// 			breakpoint: 767,
+	// 			settings: {
+	// 				slidesToShow: 2,
+	// 				slidesToScroll: 2
+	// 			}
+	// 		},
+	// 		{
+	// 			breakpoint: 480,
+	// 			settings: {
+	// 				slidesToShow: 2,
+	// 				slidesToScroll: 2
+	// 			}
+	// 		}
+	// 	]
+	// });
 	$('.section_san_pham .evo-index-block-product .button_show_tab').on('click', function(e){
 		e.preventDefault();
 		var $this = $(this);

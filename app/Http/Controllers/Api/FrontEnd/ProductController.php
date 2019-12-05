@@ -27,7 +27,8 @@ class ProductController extends Controller
             }
 
             $products = Product::getProduct([
-                'cate_id' => $request->cate_id
+                'cate_id' => $request->cate_id,
+                'limit' => $request->limit
             ]);
 
             return response()->json([

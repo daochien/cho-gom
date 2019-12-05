@@ -58,7 +58,7 @@
             </div>
         </section>
 
-        <section class="awe-section-3">
+        {{-- <section class="awe-section-3">
 
             <div class="section_gift">
                 <div class="container">
@@ -563,42 +563,12 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         @if(!empty($cates))
         @foreach($cates as $key => $cate)
-            @if(!empty($cate->getProducts->toArray()))
-            <section class="awe-section-cate-{{ $key }}">
-                <div class="section_san_pham">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="evo-index-block-product">
-                                    <div class="titlecp clearfix">
-                                        <h3><a href="san-pham-moi" title="{{ $cate['name'] }}">{{ $cate['name']}}</a></h3>
-                                        <span class="hidden-md hidden-lg hidden-sm button_show_tab">
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        </span>
-                                    </div>
-                                    <div class="evo-index-product-contain">
 
-                                        <div class="evo-block-product">
+            <list-product-component :cate="{{ json_encode($cate) }}" :index="{{ $key }}"></list-product-component>
 
-                                            @foreach($cate->getProducts as $product)
-                                                <product-component :product="{{ json_encode($product) }}"></product-component>
-                                            @endforeach
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            @endif
         @endforeach
         @endif
 

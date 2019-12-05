@@ -441,6 +441,29 @@ export default {
             } catch(err) {
                 this.errors = err.errors;
             }
+        },
+        selectFile(result) {
+
+            let data = result.data;
+            if(data.type === 'file-selected') {
+                if(this.type_image === 'avatars') {
+                    if(this.product.avatars.indexOf(data.path) == -1) {
+                        this.product.avatars.push(data.path);
+                        alert('Đã chọn');
+                    } else {
+                        alert('File này đã được chọn');
+                    }
+                }
+                else if(this.type_image === 'images') {
+                    if(this.product.images.indexOf(data.path) == -1) {
+                        this.product.images.push(data.path);
+                        alert('Đã chọn');
+                    } else {
+                        alert('File này đã được chọn');
+                    }
+                }
+            }
+
         }
 
     },
@@ -451,28 +474,12 @@ export default {
     mounted() {
         this.getCkeditor();
         let self = this;
-        window.addEventListener('message', function(result) {
-            let data = result.data;
-            if(data.type === 'file-selected') {
-                if(self.type_image === 'avatars') {
-                    if(self.product.avatars.indexOf(data.path) == -1) {
-                        self.product.avatars.push(data.path);
-                        alert('Đã chọn');
-                    } else {
-                        alert('File này đã được chọn');
-                    }
-                }
-                else if(self.type_image === 'images') {
-                    if(self.product.images.indexOf(data.path) == -1) {
-                        self.product.images.push(data.path);
-                        alert('Đã chọn');
-                    } else {
-                        alert('File này đã được chọn');
-                    }
-                }
-            }
-        }, true);
+
+        window.addEventListener('message', this.selectFile);
     },
+    beforeDestroy() {
+        window.removeEventListener('message', this.selectFile);
+    }
 
 }
 </script>

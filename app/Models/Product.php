@@ -128,14 +128,18 @@ class Product extends Model
     public static function getProduct($params)
     {
 
-        $query = Product::select('name', 'alias', 'products.product_id', 'price', 'avatars', 'discount', 'status', 'product_categories.cate_id')->orderBy('products.product_id', 'desc')
+        $query = Product::select('name', 'alias', 'products.product_id', 'price', 'avatars', 'discount', 'status', 'product_categories.cate_id', 'is_discount')->orderBy('products.product_id', 'desc')
                 ->join('product_categories', 'products.product_id', '=', 'product_categories.product_id');
         if(!empty($params['cate_id']))
         {
             $query->where('product_categories.cate_id', $params['cate_id']);
         }
 
-        return $query->whereRaw('(status & 1)')->limit(9)->get()->toArray();
+        if(!empty($params['limit'])) {
+            $query->limit($params['limit']);
+        }
+
+        return $query->whereRaw('(status & 1)')->get()->toArray();
     }
 
     /**

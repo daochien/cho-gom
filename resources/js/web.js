@@ -8,4 +8,5 @@ Vue.component('list-product-component', require('@/components/font-end/ListProdu
 
 const app = new Vue({
     el: '#web_master',
+
 });
