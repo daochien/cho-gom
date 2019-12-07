@@ -8,11 +8,11 @@ use App\Models\Categories;
 use Curl\Curl;
 class HomeController extends Controller
 {
-    protected $_cates;
+    //protected $_cates;
     public function __construct()
     {
-        $category = new Categories();
-        $this->_cates = $category->categoriesFE();
+        //$category = new Categories();
+        //$this->_cates = $category->categoriesFE();
     }
 
     /**
@@ -20,7 +20,7 @@ class HomeController extends Controller
     */
     public function home()
     {
-        return view('frontend.page.home', ['cates' => $this->_cates]);
+        return view('frontend.page.home');
     }
 
     /**
@@ -32,7 +32,7 @@ class HomeController extends Controller
         $cate = Categories::findOrFail($cateId);
         if($cate->alias === $request->name)
         {
-            return view('frontend.page.product', ['cates' => $this->_cates, 'cate' => $cate]);
+            return view('frontend.page.product', ['cate' => $cate]);
         }
 
         return redirect('danh-muc/'.$cate->alias.'.'.$cate->cate_id);

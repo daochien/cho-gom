@@ -16,8 +16,14 @@
             <div class="action_links hidden-sm hidden-xs hidden-md">
                 <form action="/cart/add" method="post" enctype="multipart/form-data" class="hidden-md variants form-nut-grid form-ajaxtocart" data-id="product-actions-15413412">
                     <input type="hidden" name="variantId" value="26599425" />
-                    <button v-if="product.status & 4" type="button" title="Thêm vào giỏ" class="action add_to_cart"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Thêm vào giỏ</button>
-                    <button v-else title="Hết hàng" type="button" disabled="disabled" class="action cart-button"><i class="fa fa-link" aria-hidden="true"></i> Hết hàng</button>
+                    <button v-if="product.status & 4" type="button" title="Thêm vào giỏ" class="action add_to_cart" @click="addCart(product)">
+                        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        Thêm vào giỏ
+                    </button>
+                    <button v-else title="Hết hàng" type="button" disabled="disabled" class="action cart-button">
+                        <i class="fa fa-link" aria-hidden="true"></i>
+                        Hết hàng
+                    </button>
                 </form>
             </div>
         </div>
@@ -41,6 +47,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 export default {
     props: {
         product: Object
@@ -109,6 +116,20 @@ export default {
         }
     },
     methods: {
+        ...mapActions('cart', [
+            'addToCart'
+        ]),
+        addCart(item) {
+            let data = {
+                name: item.name,
+                product_id: item.product_id,
+                alias: item.alias,
+                quantity: 1,
+                avatar: item.avatars[0],
+                price: this.caculatorPrice.currentPrice
+            }
+            this.addToCart(data);
+        },
 
     },
     mounted() {

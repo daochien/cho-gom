@@ -567,7 +567,7 @@
         @if(!empty($cates))
         @foreach($cates as $key => $cate)
 
-            <list-product-component :cate="{{ json_encode($cate) }}" :index="{{ $key }}"></list-product-component>
+            <home-list-product-component :cate="{{ json_encode($cate) }}" :index="{{ $key }}"></home-list-product-component>
 
         @endforeach
         @endif
