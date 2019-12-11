@@ -43,12 +43,15 @@
                 <span class="current_price">{{ caculatorPrice.oldPrice | numberFormat }}</span>
             </div>
         </div>
+
     </div>
+    
 </template>
 <script>
 import axios from 'axios';
 import { mapActions } from 'vuex';
 export default {
+    
     props: {
         product: Object
     },
@@ -128,11 +131,13 @@ export default {
                 avatar: item.avatars[0],
                 price: this.caculatorPrice.currentPrice
             }
-            this.addToCart(data);
+            this.addToCart(data);            
+            $('#popup-cart').modal('show');
         },
 
     },
     mounted() {
+        
     }
 }
 </script>

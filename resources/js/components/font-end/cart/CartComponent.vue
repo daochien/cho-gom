@@ -9,7 +9,7 @@
                 </g>
             </svg>
             <span class="count_item_pr" v-show="getCarts.length > 0">
-                {{ getCarts.length }}
+                {{ totalQuantity }}
             </span>
         </a>
         <div class="top-cart-content" v-if="getCarts.length > 0">
@@ -21,7 +21,7 @@
                         </a>
                         <div class="detail-item">
                             <div class="product-details">
-                                <a href="javascript:;" data-id="26599351" title="Xóa" class="remove-item-cart fa fa-remove">&nbsp;</a>
+                                <a href="javascript:;" @click="removeItem(cart.product_id)" title="Xóa" class="remove-item-cart fa fa-remove">&nbsp;</a>
                                 <p class="product-name">
                                     <a href="/chao-bau-sunhouse-swp36a-36cm" :title="cart.name">{{ cart.name }}</a>
                                 </p>
@@ -30,9 +30,9 @@
                                 <span class="price pricechange">{{ cart.price | numberFormat }}</span>
                                 <div class="quantity-select">
                                     <input class="variantID" type="hidden" name="variantId" value="26599351">
-                                    <button  class="reduced items-count btn-minus" type="button" >–</button>
+                                    <button  class="reduced items-count btn-minus" type="button" @click="decrease(cart)">–</button>
                                     <input type="text" class="input-text number-sidebar" :value="cart.quantity">
-                                    <button class="increase items-count btn-plus" type="button">+</button>
+                                    <button class="increase items-count btn-plus" type="button" @click="ascending(cart)">+</button>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
@@ -62,8 +62,27 @@ export default {
     computed: {
         ...mapGetters('cart', [
             'getCarts',
-            'totalPrice'
+            'totalPrice',
+            'totalQuantity'
         ])
+    },
+    methods: {
+        ...mapActions('cart', [
+            'removeItemCart'
+        ]),
+        removeItem(product_id) {
+            this.removeItemCart(product_id);
+        },
+        decrease(cart) {
+            if(cart.quantity > 1) {
+                cart.quantity--;
+            }
+        },
+        ascending(cart) {
+            if(cart.quantity < 5) {
+                cart.quantity++;
+            }
+        }
     }
 }
 </script>

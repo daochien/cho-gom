@@ -732,7 +732,7 @@
                 </div>
             </div>
         </section>
-
+        <popup-cart-component></popup-cart-component>
     </div>
 @endsection
 
