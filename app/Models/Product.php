@@ -269,5 +269,5 @@ class Product extends Model
 
     public function getColumnNameAttribute($value) {
         return json_decode($value);
-      }
+    }
 }
